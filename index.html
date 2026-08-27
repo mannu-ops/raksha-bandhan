@@ -14,7 +14,8 @@
     <!-- FontAwesome Icons for festive icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="styles.css">
+    <!-- Cache-busting CSS Link -->
+    <link rel="stylesheet" href="styles.css?v=2.0">
 </head>
 <body>
     <!-- Background Animated Canvas for Marigold Petals & Sparkles -->
@@ -43,8 +44,8 @@
         </button>
     </div>
 
-    <!-- Bottom Corner Instagram Branding Badge -->
-    <a href="https://www.instagram.com/theskillvaults/" target="_blank" rel="noopener noreferrer" class="insta-corner-badge" title="Built by @theskillvaults on Instagram">
+    <!-- ALWAYS TOP-RIGHT CORNER INSTAGRAM BADGE (STRICT INLINE FIXED STYLING FOR ALL PHONE BROWSERS) -->
+    <a href="https://www.instagram.com/theskillvaults/" target="_blank" rel="noopener noreferrer" class="insta-corner-badge" style="position: fixed !important; top: 6px !important; right: 8px !important; bottom: auto !important; left: auto !important; z-index: 99999 !important;" title="Built by @theskillvaults on Instagram">
         <i class="fab fa-instagram"></i>
         <span>Built by <strong>@theskillvaults</strong></span>
     </a>

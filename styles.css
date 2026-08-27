@@ -656,7 +656,7 @@ body {
     height: auto;
     filter: drop-shadow(0 4px 10px rgba(0,0,0,0.08));
     transition: transform 0.3s ease;
-    overflow: hidden;
+    overflow: visible !important;
 }
 
 .chibi-character-svg:hover {
@@ -705,10 +705,10 @@ body {
     100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* COMPACT IN-PLACE ROTATION FOR AARTI THALI (100% FITS INSIDE CARD FRAME) */
+/* SLOW, GENTLE FIXED-POSITION ROTATION FOR AARTI THALI (100% NO HIDING, NO OVERFLOW) */
 .aarti-thali-group {
     cursor: pointer;
-    transform-origin: 100px 140px;
+    transform-origin: 100px 132px;
     transform-box: fill-box;
     transition: filter 0.3s ease;
 }
@@ -718,15 +718,15 @@ body {
 }
 
 .aarti-thali-group.waving-aarti {
-    animation: spinCompactInPlace 1.4s linear infinite;
+    animation: slowAartiRotate 3.5s linear infinite;
 }
 
-@keyframes spinCompactInPlace {
+@keyframes slowAartiRotate {
     0% {
-        transform: rotate(0deg) scale(0.95);
+        transform: rotate(0deg);
     }
     100% {
-        transform: rotate(360deg) scale(0.95);
+        transform: rotate(360deg);
     }
 }
 

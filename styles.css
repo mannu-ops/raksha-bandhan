@@ -92,28 +92,28 @@ body {
 /* Top Left Nav Controls */
 .top-nav {
     position: fixed;
-    top: clamp(8px, 1.5vh, 12px);
-    left: clamp(8px, 1.8vw, 14px);
+    top: clamp(6px, 1vh, 10px);
+    left: clamp(6px, 1.5vw, 12px);
     z-index: 100;
     display: flex;
-    gap: 8px;
+    gap: 6px;
 }
 
 .nav-btn {
     background: rgba(255, 255, 255, 0.95);
     border: 1.5px solid var(--gold-accent);
     color: var(--dark-magenta);
-    padding: clamp(4px, 1vh, 7px) clamp(10px, 2vw, 16px);
+    padding: clamp(4px, 0.9vh, 6px) clamp(8px, 1.8vw, 14px);
     border-radius: 22px;
     font-family: var(--font-heading);
     font-weight: 600;
-    font-size: clamp(0.72rem, 1.8vw, 0.88rem);
+    font-size: clamp(0.7rem, 1.8vw, 0.85rem);
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.09);
     transition: all 0.25s ease;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     white-space: nowrap;
 }
 
@@ -123,32 +123,32 @@ body {
     border-color: var(--primary-magenta);
 }
 
-/* TOP RIGHT CORNER INSTAGRAM BRANDING BADGE */
+/* TOP RIGHT CORNER INSTAGRAM BRANDING BADGE (PERFECT FOR BOTH MOBILE & DESKTOP) */
 .insta-corner-badge {
     position: fixed;
-    top: clamp(8px, 1.5vh, 12px);
-    right: clamp(8px, 1.8vw, 14px);
+    top: clamp(6px, 1vh, 10px);
+    right: clamp(6px, 1.5vw, 12px);
     z-index: 100;
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(10px);
     border: 1.5px solid rgba(225, 48, 108, 0.4);
     color: var(--dark-magenta);
     text-decoration: none;
-    padding: clamp(4px, 0.8vh, 6px) clamp(8px, 1.8vw, 14px);
+    padding: clamp(4px, 0.9vh, 6px) clamp(8px, 1.8vw, 14px);
     border-radius: 20px;
     font-family: var(--font-heading);
-    font-size: clamp(0.68rem, 1.6vw, 0.82rem);
+    font-size: clamp(0.68rem, 1.7vw, 0.82rem);
     font-weight: 600;
     box-shadow: 0 4px 15px rgba(225, 48, 108, 0.18);
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     white-space: nowrap;
 }
 
 .insta-corner-badge i {
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-size: clamp(0.88rem, 2vw, 1.1rem);
     background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -171,8 +171,8 @@ body {
     position: relative;
     z-index: 5;
     width: min(94vw, 620px);
-    height: calc(100dvh - 36px);
-    margin-top: 30px;
+    height: calc(100dvh - 38px);
+    margin-top: 34px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -904,19 +904,45 @@ body {
    BREAKPOINTS & MEDIA QUERIES FOR SPECIFIC DEVICE OPTIMIZATION
    ========================================================================== */
 
-/* 1. SMALL MOBILE SCREENS (< 370px width e.g., iPhone SE / Folded Phones) */
+/* 1. MOBILE SMARTPHONES (< 480px width - PERFECT TOP NAV & INSTA BADGE FIT) */
+@media screen and (max-width: 480px) {
+    .top-nav {
+        top: 6px;
+        left: 6px;
+    }
+    .insta-corner-badge {
+        top: 6px;
+        right: 6px;
+        font-size: 0.66rem;
+        padding: 3px 8px;
+        gap: 3px;
+    }
+    .insta-corner-badge i {
+        font-size: 0.85rem;
+    }
+    .nav-btn {
+        font-size: 0.66rem;
+        padding: 3px 8px;
+        gap: 3px;
+    }
+    .app-container {
+        margin-top: 36px;
+    }
+}
+
+/* 2. ULTRA-SMALL MOBILE SCREENS (< 370px width e.g., iPhone SE / Folded Phones) */
 @media screen and (max-width: 370px) {
     .main-title { font-size: 1.15rem; }
     .btn-ritual { font-size: 0.72rem; padding: 4px 7px; flex: 1 1 calc(50% - 6px); }
-    .insta-corner-badge { font-size: 0.65rem; padding: 3px 8px; }
-    .top-nav .nav-btn { font-size: 0.7rem; padding: 4px 8px; }
+    .insta-corner-badge { font-size: 0.62rem; padding: 2px 6px; }
+    .top-nav .nav-btn { font-size: 0.64rem; padding: 2px 6px; }
     .gift-grid { gap: 2px; }
     .gift-card { padding: 3px 1px; min-height: 36px; }
     .gift-emoji { font-size: 0.9rem; }
     .gift-name { font-size: 0.5rem; }
 }
 
-/* 2. SHORT VIEWPORTS / MOBILE LANDSCAPE (< 640px height) */
+/* 3. SHORT VIEWPORTS / MOBILE LANDSCAPE (< 640px height) */
 @media screen and (max-height: 640px) {
     .app-container { margin-top: 24px; height: calc(100dvh - 28px); }
     .card-glass { padding: 8px 12px; }
@@ -930,7 +956,7 @@ body {
     .toran-decoration { height: 22px; font-size: 0.75rem; }
 }
 
-/* 3. TABLETS, IPADS & DESKTOPS (>= 768px width) */
+/* 4. TABLETS, IPADS & DESKTOPS (>= 768px width) */
 @media screen and (min-width: 768px) {
     .app-container { width: min(85vw, 680px); }
     .card-glass { padding: 24px 30px; border-radius: 26px; }

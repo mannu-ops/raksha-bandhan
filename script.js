@@ -362,7 +362,7 @@ function renderWishView(data) {
         document.getElementById('envelopeGreetingText').innerText = `Special Raksha Bandhan Envelope for You, ${data.to}! 👦`;
         document.getElementById('brotherRitualView').classList.remove('hidden');
         document.getElementById('sisterRitualView').classList.add('hidden');
-        document.getElementById('ritualTab1Label').innerText = '🌸 Virtual Rakhi';
+        document.getElementById('ritualTab1Label').innerText = '🌸 Virtual Rakhi & Aarti';
     } else {
         document.getElementById('envelopeGreetingText').innerText = `Special Raksha Bandhan Wish for You, ${data.to}! 👧`;
         document.getElementById('brotherRitualView').classList.add('hidden');
@@ -418,7 +418,7 @@ function switchRitualTab(tabId) {
     document.getElementById(tabId).classList.add('active-tab');
 }
 
-// Brother Ritual Functions - ANIMATED CUTE CHARACTER INTERACTION
+// Brother Ritual Functions - ANIMATED CUTE CHARACTER & AARTI THALI
 function performTilak() {
     playSFX('rakhi');
     const tilak = document.getElementById('svgTilakGroup');
@@ -457,25 +457,42 @@ function performTieRakhi() {
     triggerConfettiBurst();
 }
 
+function performAarti() {
+    playSFX('rakhi');
+    const thali = document.getElementById('svgAartiThaliGroup');
+    const speech = document.getElementById('characterSpeechBubble');
+    const happyEyes = document.getElementById('characterEyesHappy');
+    const openEyes = document.getElementById('characterEyesOpen');
+
+    if (thali) {
+        thali.classList.add('waving-aarti');
+        setTimeout(() => thali.classList.remove('waving-aarti'), 3600);
+    }
+
+    if (happyEyes && openEyes) {
+        openEyes.classList.add('hidden');
+        happyEyes.classList.remove('hidden');
+    }
+    if (speech) {
+        speech.innerText = `"Yay! Aarti Blessings!" 🪔✨`;
+        speech.classList.remove('hidden');
+    }
+    triggerConfettiBurst();
+}
+
 function showerLoveFlowers() {
     playSFX('confetti');
     triggerConfettiBurst();
 }
 
-// Aarti Thali Functions
-function rotateThali() {
-    playSFX('tap');
-    const thali = document.getElementById('thaliPlate');
-    thali.style.transform = 'rotate(360deg)';
-    setTimeout(() => thali.style.transform = 'rotate(0deg)', 600);
-}
-
 function feedSweet(sweetName) {
     event.stopPropagation();
     playSFX('munch');
-    const feedback = document.getElementById('sweetsFeedFeedback');
-    feedback.innerText = `Yummy! Fed ${sweetName} to ${currentWishData.to}! 😋✨`;
-    feedback.style.color = '#D81B60';
+    const speech = document.getElementById('characterSpeechBubble');
+    if (speech) {
+        speech.innerText = `Yummy! ${sweetName}! 😋✨`;
+        speech.classList.remove('hidden');
+    }
     triggerConfettiBurst();
 }
 

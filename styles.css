@@ -89,11 +89,11 @@ body {
     100% { transform: translateY(3px) rotate(4deg); }
 }
 
-/* Top Nav Controls */
+/* Top Left Nav Controls */
 .top-nav {
-    position: absolute;
-    top: clamp(8px, 1.5vh, 14px);
-    right: clamp(8px, 2vw, 16px);
+    position: fixed;
+    top: clamp(8px, 1.5vh, 12px);
+    left: clamp(8px, 1.8vw, 14px);
     z-index: 100;
     display: flex;
     gap: 8px;
@@ -123,11 +123,11 @@ body {
     border-color: var(--primary-magenta);
 }
 
-/* Floating Bottom Corner Instagram Badge */
+/* TOP RIGHT CORNER INSTAGRAM BRANDING BADGE */
 .insta-corner-badge {
     position: fixed;
-    bottom: clamp(6px, 1.2vh, 12px);
-    left: clamp(6px, 1.5vw, 14px);
+    top: clamp(8px, 1.5vh, 12px);
+    right: clamp(8px, 1.8vw, 14px);
     z-index: 100;
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(10px);
@@ -166,7 +166,7 @@ body {
     -webkit-text-fill-color: white;
 }
 
-/* App Main Container (FLUID & DYNAMICALLY RESPONSIVE TO ANY SCREEN) */
+/* App Main Container */
 .app-container {
     position: relative;
     z-index: 5;
@@ -340,7 +340,7 @@ body {
     border-color: var(--primary-magenta);
 }
 
-/* Virtual Gift Grid (5 COLUMNS - RESPONSIVE & SQUEEZE SAFE) */
+/* Virtual Gift Grid */
 .gift-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -483,7 +483,7 @@ body {
 }
 
 
-/* RECIPIENT VIEW & 3D ENVELOPE (DYNAMICALLY SCALED & RESPONSIVE) */
+/* RECIPIENT VIEW & 3D ENVELOPE */
 #recipientView {
     width: 100%;
     height: 100%;
@@ -515,7 +515,7 @@ body {
 @keyframes sparklePulse { 0% { transform: scale(1); } 100% { transform: scale(1.3); } }
 .tap-hint { font-size: clamp(0.78rem, 1.8vh, 0.88rem); color: var(--marigold-orange); font-weight: 600; margin-top: 3px; }
 
-/* 3D ENVELOPE (DYNAMIC FLUID VARIABLES FOR PERFECT FLAP ALIGNMENT ON ANY SCREEN) */
+/* 3D ENVELOPE */
 .envelope-wrapper {
     position: relative;
     width: min(320px, 84vw);

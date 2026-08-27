@@ -123,15 +123,15 @@ body {
     border-color: var(--primary-magenta);
 }
 
-/* TOP RIGHT CORNER INSTAGRAM BRANDING BADGE (PERFECT FOR BOTH MOBILE & DESKTOP) */
+/* ALWAYS FIXED AT VERY TOP RIGHT CORNER FOR ALL SCREEN SIZES */
 .insta-corner-badge {
-    position: fixed;
-    top: clamp(6px, 1vh, 10px);
-    right: clamp(6px, 1.5vw, 12px);
-    z-index: 100;
-    background: rgba(255, 255, 255, 0.92);
+    position: fixed !important;
+    top: clamp(6px, 1.2vh, 12px) !important;
+    right: clamp(6px, 1.5vw, 14px) !important;
+    z-index: 9999 !important;
+    background: rgba(255, 255, 255, 0.94);
     backdrop-filter: blur(10px);
-    border: 1.5px solid rgba(225, 48, 108, 0.4);
+    border: 1.5px solid rgba(225, 48, 108, 0.45);
     color: var(--dark-magenta);
     text-decoration: none;
     padding: clamp(4px, 0.9vh, 6px) clamp(8px, 1.8vw, 14px);
@@ -139,7 +139,7 @@ body {
     font-family: var(--font-heading);
     font-size: clamp(0.68rem, 1.7vw, 0.82rem);
     font-weight: 600;
-    box-shadow: 0 4px 15px rgba(225, 48, 108, 0.18);
+    box-shadow: 0 4px 15px rgba(225, 48, 108, 0.22);
     display: flex;
     align-items: center;
     gap: 5px;
@@ -904,18 +904,19 @@ body {
    BREAKPOINTS & MEDIA QUERIES FOR SPECIFIC DEVICE OPTIMIZATION
    ========================================================================== */
 
-/* 1. MOBILE SMARTPHONES (< 480px width - PERFECT TOP NAV & INSTA BADGE FIT) */
+/* 1. MOBILE SMARTPHONES (< 480px width) */
 @media screen and (max-width: 480px) {
     .top-nav {
-        top: 6px;
-        left: 6px;
+        top: 6px !important;
+        left: 6px !important;
     }
     .insta-corner-badge {
-        top: 6px;
-        right: 6px;
-        font-size: 0.66rem;
-        padding: 3px 8px;
+        top: 6px !important;
+        right: 6px !important;
+        font-size: 0.68rem !important;
+        padding: 3px 8px !important;
         gap: 3px;
+        z-index: 9999 !important;
     }
     .insta-corner-badge i {
         font-size: 0.85rem;
@@ -934,7 +935,7 @@ body {
 @media screen and (max-width: 370px) {
     .main-title { font-size: 1.15rem; }
     .btn-ritual { font-size: 0.72rem; padding: 4px 7px; flex: 1 1 calc(50% - 6px); }
-    .insta-corner-badge { font-size: 0.62rem; padding: 2px 6px; }
+    .insta-corner-badge { top: 4px !important; right: 4px !important; font-size: 0.62rem !important; padding: 2px 6px !important; z-index: 9999 !important; }
     .top-nav .nav-btn { font-size: 0.64rem; padding: 2px 6px; }
     .gift-grid { gap: 2px; }
     .gift-card { padding: 3px 1px; min-height: 36px; }

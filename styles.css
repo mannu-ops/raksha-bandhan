@@ -704,27 +704,29 @@ body {
     100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Aarti Thali Waving Animation in Front of Character */
+/* SMOOTH 360-DEGREE ROUND & ROUND AARTI ROTATION */
 .aarti-thali-group {
     cursor: pointer;
-    transform-origin: 100px 148px;
+    transform-box: fill-box;
+    transform-origin: center;
     transition: transform 0.3s ease;
 }
 
 .aarti-thali-group:hover {
-    filter: drop-shadow(0 0 6px #FFD54F);
+    filter: drop-shadow(0 0 8px #FFD54F);
 }
 
 .aarti-thali-group.waving-aarti {
-    animation: aartiCircularWave 1.6s ease-in-out infinite;
+    animation: smoothRoundAarti 1.8s linear infinite;
 }
 
-@keyframes aartiCircularWave {
-    0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-    25% { transform: translate(-14px, -10px) rotate(-10deg) scale(1.1); }
-    50% { transform: translate(0px, -16px) rotate(0deg) scale(1.15); }
-    75% { transform: translate(14px, -10px) rotate(10deg) scale(1.1); }
-    100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+@keyframes smoothRoundAarti {
+    0% {
+        transform: rotate(0deg) scale(1.05);
+    }
+    100% {
+        transform: rotate(360deg) scale(1.05);
+    }
 }
 
 .diya-flame-group {

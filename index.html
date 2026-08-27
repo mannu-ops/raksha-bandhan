@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>✨ Happy Raksha Bandhan | Cute Festive Greetings ✨</title>
+    <meta name="description" content="Send a cute animated Raksha Bandhan envelope & personalized virtual wish to your brother or sister!">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@400;500;600;700;800&family=Poppins:ital,wght@0,400;0,600;0,700;1,500&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons for festive icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Animated Canvas for Marigold Petals & Sparkles -->
+    <canvas id="festiveCanvas"></canvas>
+
+    <!-- Background Decorative Elements -->
+    <div class="toran-decoration">
+        <div class="toran-leaf">🍃</div>
+        <div class="toran-flower">🌼</div>
+        <div class="toran-leaf">🍃</div>
+        <div class="toran-flower">🌺</div>
+        <div class="toran-leaf">🍃</div>
+        <div class="toran-flower">🌼</div>
+        <div class="toran-leaf">🍃</div>
+        <div class="toran-flower">🌺</div>
+        <div class="toran-leaf">🍃</div>
+    </div>
+
+    <!-- Floating Audio & Home Control Nav -->
+    <div class="top-nav">
+        <button id="musicToggle" class="nav-btn" title="Toggle Festive Music">
+            <i class="fas fa-music"></i> <span id="musicStatusText">Play Music</span>
+        </button>
+        <button id="homeBtn" class="nav-btn secondary-nav-btn hidden" onclick="openCreatorMode()">
+            <i class="fas fa-plus-circle"></i> Create Wish
+        </button>
+    </div>
+
+    <!-- Main Container - 100dvh Single Screen -->
+    <main class="app-container">
+
+        <!-- ========================================== -->
+        <!-- VIEW 1: CREATOR FORM (SENDER FLOW)         -->
+        <!-- ========================================== -->
+        <section id="creatorView" class="card-glass fade-in">
+            <div class="card-header text-center">
+                <div class="badge-festive">✨ Raksha Bandhan Special ✨</div>
+                <h1 class="main-title">Raksha Bandhan Wish Generator</h1>
+                <p class="sub-title">Create a cute animated wish for your sibling! 🎁🌸</p>
+            </div>
+
+            <form id="wishForm" onsubmit="event.preventDefault(); generateWishLink();">
+                
+                <!-- Step 1: Select Relation -->
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-heart"></i> Who are you sending this wish to?</label>
+                    <div class="role-selector">
+                        <label class="role-card selected" for="roleBrother">
+                            <input type="radio" id="roleBrother" name="recipientRole" value="brother" checked onchange="updateRoleTheme()">
+                            <div class="role-icon">👦</div>
+                            <div class="role-text-wrap">
+                                <div class="role-title">Brother</div>
+                                <div class="role-desc">For Bro / Bhaiyu</div>
+                            </div>
+                            <div class="check-mark"><i class="fas fa-check-circle"></i></div>
+                        </label>
+                        
+                        <label class="role-card" for="roleSister">
+                            <input type="radio" id="roleSister" name="recipientRole" value="sister" onchange="updateRoleTheme()">
+                            <div class="role-icon">👧</div>
+                            <div class="role-text-wrap">
+                                <div class="role-title">Sister</div>
+                                <div class="role-desc">For Sis / Di</div>
+                            </div>
+                            <div class="check-mark"><i class="fas fa-check-circle"></i></div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Step 2: Names -->
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="recipientName" class="form-label">
+                            <i class="fas fa-user-tag"></i> Their Nickname
+                        </label>
+                        <input type="text" id="recipientName" class="custom-input" placeholder="e.g. Chhotu, Alex" required maxlength="25">
+                    </div>
+
+                    <div class="form-group half-width">
+                        <label for="senderName" class="form-label">
+                            <i class="fas fa-pen-fancy"></i> Your Name
+                        </label>
+                        <input type="text" id="senderName" class="custom-input" placeholder="e.g. Loving Sister" required maxlength="25">
+                    </div>
+                </div>
+
+                <!-- Step 3: Message Selector -->
+                <div class="form-group">
+                    <label for="presetMessages" class="form-label">
+                        <i class="fas fa-envelope-open-text"></i> Choose Message (or write custom)
+                    </label>
+                    <select id="presetMessages" class="custom-select" onchange="applyPresetMessage()">
+                        <option value="custom">✍️ Custom Message...</option>
+                        <option value="msg1" selected>🌸 "Bound by love, may our bond shine brighter every day! Happy Rakhi!"</option>
+                        <option value="msg2">🍫 "From fighting over chocolates to protecting each other, you are the best!"</option>
+                        <option value="msg3">🎁 "Wishing the cutest sibling a very Happy Raksha Bandhan! Stay blessed!"</option>
+                        <option value="msg4">✨ "On this Rakhi, I promise to always be by your side. Sending virtual sweets!"</option>
+                    </select>
+                    <textarea id="customMessage" class="custom-textarea" placeholder="Type your sweet custom note..." maxlength="200"></textarea>
+                </div>
+
+                <!-- Step 4: Virtual Gift Choice -->
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-gift"></i> Select a Cute Gift</label>
+                    <div class="gift-grid">
+                        <label class="gift-card selected" for="giftKaju">
+                            <input type="radio" id="giftKaju" name="virtualGift" value="kaju_katli" checked>
+                            <span class="gift-emoji">🍬</span>
+                            <span class="gift-name">Kaju Katli</span>
+                        </label>
+                        <label class="gift-card" for="giftChoco">
+                            <input type="radio" id="giftChoco" name="virtualGift" value="chocolates">
+                            <span class="gift-emoji">🍫</span>
+                            <span class="gift-name">Silk Choco</span>
+                        </label>
+                        <label class="gift-card" for="giftShagun">
+                            <input type="radio" id="giftShagun" name="virtualGift" value="shagun">
+                            <span class="gift-emoji">🧧</span>
+                            <span class="gift-name">Shagun</span>
+                        </label>
+                        <label class="gift-card" for="giftTeddy">
+                            <input type="radio" id="giftTeddy" name="virtualGift" value="teddy">
+                            <span class="gift-emoji">🧸</span>
+                            <span class="gift-name">Teddy Bear</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Generate Button -->
+                <button type="submit" class="btn-sparkle">
+                    <span class="btn-text"><i class="fas fa-magic"></i> Generate Magic Link! ✨</span>
+                </button>
+            </form>
+
+            <!-- Generated Link Output Section -->
+            <div id="linkResultCard" class="result-card hidden">
+                <div class="result-header">
+                    <div class="success-icon">🎉</div>
+                    <h3>Magic Envelope Link Ready!</h3>
+                    <p>Share this magical link with your sibling!</p>
+                </div>
+
+                <div class="link-box-wrapper">
+                    <input type="text" id="generatedLinkInput" readonly class="generated-link-input">
+                    <button class="btn-copy" onclick="copyGeneratedLink()">
+                        <span id="copyBtnText">Copy</span>
+                    </button>
+                </div>
+
+                <div class="action-buttons-grid">
+                    <a id="whatsappShareBtn" href="#" target="_blank" class="btn-whatsapp">
+                        <i class="fab fa-whatsapp"></i> Send on WhatsApp
+                    </a>
+                    <button class="btn-preview" onclick="previewCurrentWish()">
+                        <i class="fas fa-eye"></i> Live Preview
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- VIEW 2: RECIPIENT VIEW (ENVELOPE & WISH)   -->
+        <!-- ========================================== -->
+        <section id="recipientView" class="hidden">
+            
+            <!-- ENVELOPE STAGE -->
+            <div id="envelopeStage" class="envelope-stage-container">
+                <div class="envelope-instruction">
+                    <span class="pulse-sparkle">✨</span> 
+                    <span id="envelopeGreetingText">Special Raksha Bandhan Envelope!</span> 
+                    <span class="pulse-sparkle">✨</span>
+                    <p class="tap-hint">Tap wax seal to open 📩</p>
+                </div>
+
+                <!-- 3D Cute Animated Envelope -->
+                <div class="envelope-wrapper" id="envelopeWrapper" onclick="openEnvelope()">
+                    <div class="envelope">
+                        <!-- Top Flap -->
+                        <div class="envelope-flap" id="envelopeFlap"></div>
+                        
+                        <!-- Paper Letter Peeking Inside -->
+                        <div class="envelope-paper-preview" id="paperPreview">
+                            <div class="mini-letter-header">🌸 Happy Raksha Bandhan 🌸</div>
+                            <div class="mini-letter-peek">Tap to read letter...</div>
+                        </div>
+                        
+                        <!-- Left & Right Flaps -->
+                        <div class="envelope-left"></div>
+                        <div class="envelope-right"></div>
+                        <div class="envelope-bottom"></div>
+
+                        <!-- Wax Seal Button -->
+                        <div class="wax-seal" id="waxSeal">
+                            <div class="seal-inner">
+                                <span class="seal-icon">🪔</span>
+                                <span class="seal-text">OPEN</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EXPANDED LETTER & INTERACTIVE FESTIVE HUB -->
+            <div id="letterHub" class="letter-hub-container hidden">
+                <div class="festive-letter-card card-glass fade-in-up">
+                    
+                    <!-- Decorative Top Corner Patterns -->
+                    <div class="letter-corner top-left">🌸</div>
+                    <div class="letter-corner top-right">🌸</div>
+
+                    <div class="letter-header text-center">
+                        <div class="rakhi-motif">🪔 🌸 ✨ 🌸 🪔</div>
+                        <h2 class="letter-salutation">
+                            Dear <span id="displayRecipientName" class="highlight-name">Chhotu</span>,
+                        </h2>
+                        <div class="sub-greeting" id="displaySubtitleGreeting">Happy Raksha Bandhan! 💖</div>
+                    </div>
+
+                    <!-- Letter Body Text - NO OVERFLOW -->
+                    <div class="letter-body">
+                        <div class="quote-mark">“</div>
+                        <p id="displayMessageText" class="handwritten-text">
+                            Bound by love, may our bond shine brighter every day!
+                        </p>
+                        <div class="quote-mark text-right">”</div>
+                    </div>
+
+                    <div class="letter-footer text-right">
+                        <p class="with-love">With lots of love,</p>
+                        <p class="sender-signature" id="displaySenderName">~ Your Loving Sister</p>
+                    </div>
+
+                    <hr class="divider-glow">
+
+                    <!-- INTERACTIVE RITUAL TABS -->
+                    <div class="interactive-section">
+                        <h3 class="section-title"><i class="fas fa-sparkles"></i> Virtual Celebration Rituals <i class="fas fa-sparkles"></i></h3>
+                        
+                        <div class="ritual-tabs">
+                            <button class="tab-btn active" onclick="switchRitualTab('rakhiTab')">
+                                <span id="ritualTab1Label">🌸 Virtual Rakhi</span>
+                            </button>
+                            <button class="tab-btn" onclick="switchRitualTab('aartiTab')">
+                                🪔 Aarti & Sweets
+                            </button>
+                            <button class="tab-btn" onclick="switchRitualTab('giftTab')">
+                                🎁 Unbox Gift
+                            </button>
+                            <button class="tab-btn" onclick="switchRitualTab('certificateTab')">
+                                📜 Sibling Award
+                            </button>
+                        </div>
+
+                        <!-- TAB 1: RAKHI TYING / SISTER SURPRISE -->
+                        <div id="rakhiTab" class="tab-content active-tab">
+                            <div class="ritual-card">
+                                <div id="brotherRitualView">
+                                    <h4>Perform Virtual Rakhi Ceremony!</h4>
+                                    <p class="tab-desc">Tap below to apply Tilak & tie Rakhi!</p>
+                                    
+                                    <div class="wrist-display-area">
+                                        <div class="wrist-graphic">
+                                            <div id="wristTilak" class="wrist-tilak hidden">🔴</div>
+                                            <div id="wristRakhi" class="wrist-rakhi hidden">
+                                                <span class="rakhi-thread">~~~~~</span>
+                                                <span id="displayRakhiIcon" class="rakhi-center">🌸</span>
+                                                <span class="rakhi-thread">~~~~~</span>
+                                            </div>
+                                            <div class="wrist-label">🖐️ Brother's Wrist</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ritual-actions">
+                                        <button class="btn-ritual" onclick="performTilak()">
+                                            🔴 Apply Tilak
+                                        </button>
+                                        <button class="btn-ritual primary" onclick="performTieRakhi()">
+                                            🌸 Tie Rakhi!
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div id="sisterRitualView" class="hidden">
+                                    <h4>Special Raksha Bandhan Love!</h4>
+                                    <p class="tab-desc">Tap to shower virtual flowers & love!</p>
+                                    <div class="flower-shower-stage">
+                                        <div class="sister-avatar-icon">👧💖</div>
+                                        <p id="sisterPromiseText" class="promise-highlight">"I promise to always protect you!"</p>
+                                    </div>
+                                    <button class="btn-ritual primary" onclick="showerLoveFlowers()">
+                                        🌸 Shower Flowers & Love!
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB 2: AARTI & SWEETS -->
+                        <div id="aartiTab" class="tab-content">
+                            <div class="ritual-card text-center">
+                                <h4>Virtual Aarti Thali & Sweets! 🍬</h4>
+                                <p class="tab-desc">Tap Thali or Sweets to feed your sibling!</p>
+                                
+                                <div class="aarti-thali-interactive" onclick="rotateThali()">
+                                    <div class="thali-plate" id="thaliPlate">
+                                        <div class="diya-flame">🔥</div>
+                                        <div class="diya-base">🪔</div>
+                                        <div class="thali-sweets-grid">
+                                            <span class="sweet-item" onclick="feedSweet('Kaju Katli')">🍬</span>
+                                            <span class="sweet-item" onclick="feedSweet('Motichoor Laddu')">🟡</span>
+                                            <span class="sweet-item" onclick="feedSweet('Cadbury Silk')">🍫</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p id="sweetsFeedFeedback" class="sweets-feedback">Tap any sweet above to feed!</p>
+                            </div>
+                        </div>
+
+                        <!-- TAB 3: UNBOX GIFT -->
+                        <div id="giftTab" class="tab-content">
+                            <div class="ritual-card text-center">
+                                <h4>Your Special Surprise Gift! 🎁</h4>
+                                <p class="tab-desc">Tap gift box to unbox surprise!</p>
+                                
+                                <div class="gift-box-interactive" id="giftBoxElement" onclick="unboxVirtualGift()">
+                                    <div class="gift-box-lid" id="giftLid">🎁</div>
+                                    <div class="gift-box-body">✨ Tap to Open ✨</div>
+                                </div>
+
+                                <div id="unboxedGiftResult" class="gift-result-card hidden">
+                                    <div id="unboxedGiftEmoji" class="gift-big-emoji">🍬</div>
+                                    <h4 id="unboxedGiftTitle">Kaju Katli Box!</h4>
+                                    <p id="unboxedGiftDesc">"Sweet treats for Raksha Bandhan!"</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB 4: SIBLING CERTIFICATE -->
+                        <div id="certificateTab" class="tab-content">
+                            <div class="ritual-card">
+                                <div class="certificate-box">
+                                    <div class="cert-border">
+                                        <div class="cert-header">🏆 OFFICIAL CERTIFICATE 🏆</div>
+                                        <div class="cert-title">Best Sibling Award</div>
+                                        <div class="cert-body">
+                                            Awarded to: <h3 id="certRecipientName" class="cert-name">Chhotu</h3>
+                                            for being the sweetest sibling in the universe!
+                                        </div>
+                                        <div class="cert-signatures">
+                                            <div class="sig-col">
+                                                <div class="sig-line" id="certSenderSig">Your Loving Sister</div>
+                                                <div class="sig-label">Presented By</div>
+                                            </div>
+                                            <div class="sig-col">
+                                                <div class="sig-seal">🌸 RAKHI 2026 🌸</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center margin-top-1">
+                                    <button class="btn-ritual" onclick="triggerConfettiBurst()">
+                                        🎉 Blast Confetti!
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> <!-- End Interactive Section -->
+
+                    <!-- Bottom Action: Create Your Own Wish -->
+                    <div class="letter-action-footer text-center">
+                        <p class="create-prompt">Want to send a wish to your sibling?</p>
+                        <button class="btn-sparkle glow-btn" onclick="openCreatorMode()">
+                            ✨ Create Your Own Rakhi Wish Now! ✨
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer text-center">
+        <p>Made with ❤️ for Raksha Bandhan | Share Love & Joy 🌸</p>
+    </footer>
+
+    <!-- JavaScript Script -->
+    <script src="script.js"></script>
+</body>
+</html>

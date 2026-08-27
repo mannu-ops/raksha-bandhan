@@ -235,14 +235,13 @@ function updateGiftTheme() {
     playSFX('tap');
 }
 
-// FIX: Automatically clears text when "Custom Message" option is selected from dropdown
 function applyPresetMessage() {
     const select = document.getElementById('presetMessages');
     const textarea = document.getElementById('customMessage');
     if (!select || !textarea) return;
     
     if (select.value === 'custom') {
-        textarea.value = ''; // Clears text so it becomes blank for user to type
+        textarea.value = '';
         textarea.placeholder = "Type your sweet custom note here...";
         textarea.focus();
     } else if (PRESETS[select.value]) {
@@ -250,7 +249,6 @@ function applyPresetMessage() {
     }
 }
 
-// FIX: Automatically clears text when user clicks/taps into textarea if preset is currently active
 function clearIfPreset() {
     const select = document.getElementById('presetMessages');
     const textarea = document.getElementById('customMessage');
@@ -403,7 +401,6 @@ function openCreatorMode() {
     document.getElementById('creatorView').classList.remove('hidden');
     document.getElementById('homeBtn').classList.add('hidden');
     
-    // Ensure default message is pre-filled when opening creator mode
     applyPresetMessage();
 }
 
@@ -421,18 +418,42 @@ function switchRitualTab(tabId) {
     document.getElementById(tabId).classList.add('active-tab');
 }
 
-// Brother Ritual Functions
+// Brother Ritual Functions - ANIMATED CUTE CHARACTER INTERACTION
 function performTilak() {
     playSFX('rakhi');
-    const tilak = document.getElementById('wristTilak');
-    tilak.classList.remove('hidden');
+    const tilak = document.getElementById('svgTilakGroup');
+    const speech = document.getElementById('characterSpeechBubble');
+    const happyEyes = document.getElementById('characterEyesHappy');
+    const openEyes = document.getElementById('characterEyesOpen');
+
+    if (tilak) tilak.classList.remove('hidden');
+    if (happyEyes && openEyes) {
+        openEyes.classList.add('hidden');
+        happyEyes.classList.remove('hidden');
+    }
+    if (speech) {
+        speech.innerText = `"Yay! Lovely Tilak!" ✨🔴`;
+        speech.classList.remove('hidden');
+    }
     triggerConfettiBurst();
 }
 
 function performTieRakhi() {
     playSFX('rakhi');
-    const rakhi = document.getElementById('wristRakhi');
-    rakhi.classList.remove('hidden');
+    const rakhi = document.getElementById('svgRakhiGroup');
+    const speech = document.getElementById('characterSpeechBubble');
+    const happyEyes = document.getElementById('characterEyesHappy');
+    const openEyes = document.getElementById('characterEyesOpen');
+
+    if (rakhi) rakhi.classList.remove('hidden');
+    if (happyEyes && openEyes) {
+        openEyes.classList.add('hidden');
+        happyEyes.classList.remove('hidden');
+    }
+    if (speech) {
+        speech.innerText = `"Yay! Beautiful Rakhi!" 🌸💖`;
+        speech.classList.remove('hidden');
+    }
     triggerConfettiBurst();
 }
 

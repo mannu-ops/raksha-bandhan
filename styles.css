@@ -1,5 +1,6 @@
 /* ==========================================
    RAKSHA BANDHAN ZERO-SCROLL DESIGN SYSTEM
+   ANIMATED CUTE CHARACTER RAKHI & TILAK SCENE
    ========================================== */
 
 :root {
@@ -293,7 +294,7 @@ body {
     border-color: var(--primary-magenta);
 }
 
-/* Virtual Gift Grid - FIXED SELECTION STYLING */
+/* Virtual Gift Grid */
 .gift-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -638,16 +639,77 @@ body {
 .ritual-card h4 { font-family: var(--font-heading); font-size: 0.82rem; color: var(--dark-magenta); margin-bottom: 2px; }
 .tab-desc { font-size: 0.68rem; color: var(--text-muted); margin-bottom: 4px; }
 
-.wrist-display-area { width: 100%; height: 55px; background: linear-gradient(135deg, #FFF3E0, #FCE4EC); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; margin-bottom: 4px; position: relative; }
-.wrist-label { font-size: 0.65rem; color: #888; margin-top: 2px; }
-.wrist-tilak { font-size: 0.95rem; position: absolute; top: -8px; left: 50%; transform: translateX(-50%); }
-.wrist-rakhi { font-size: 1.1rem; }
-.rakhi-thread { color: #D81B60; font-weight: 900; font-size: 0.8rem; }
 
+/* ANIMATED CUTE CHARACTER STAGE STYLING */
+.character-ritual-stage {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 2px 0 6px 0;
+}
+
+.chibi-character-svg {
+    width: min(175px, 52vw);
+    height: auto;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.08));
+    transition: transform 0.3s ease;
+}
+
+.chibi-character-svg:hover {
+    transform: scale(1.03);
+}
+
+/* Cute Floating Speech Bubble */
+.speech-bubble {
+    position: absolute;
+    top: -12px;
+    background: #FFF8E1;
+    border: 1.5px solid var(--gold-accent);
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.72rem;
+    color: var(--primary-magenta);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    animation: popBubble 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popBubble {
+    0% { transform: scale(0) translateY(10px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* SVG Animations for Tilak & Rakhi */
+.tilak-group {
+    animation: tilakPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes tilakPop {
+    0% { transform: scale(0); opacity: 0; transform-origin: 100px 58px; }
+    70% { transform: scale(1.4); transform-origin: 100px 58px; }
+    100% { transform: scale(1); opacity: 1; transform-origin: 100px 58px; }
+}
+
+.rakhi-group {
+    animation: rakhiWind 0.6s ease forwards;
+}
+
+@keyframes rakhiWind {
+    0% { opacity: 0; transform: translateY(-8px) scale(0.8); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+
+/* Wrist Graphic & Ritual Actions */
 .ritual-actions { display: flex; gap: 4px; justify-content: center; }
 .btn-ritual {
     background: #FFF; border: 1.5px solid var(--gold-accent); color: var(--dark-magenta);
-    padding: 4px 8px; border-radius: 16px; font-weight: 700; font-size: 0.7rem; cursor: pointer;
+    padding: 5px 10px; border-radius: 18px; font-weight: 700; font-size: 0.7rem; cursor: pointer;
 }
 .btn-ritual.primary { background: var(--primary-magenta); color: white; border-color: var(--primary-magenta); }
 

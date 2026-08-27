@@ -35,7 +35,7 @@ const GIFT_DATA = {
 document.addEventListener('DOMContentLoaded', () => {
     initCanvasParticles();
     checkUrlParamsAndRender();
-    
+
     // Pre-fill default selected preset message into textarea on first load
     applyPresetMessage();
 
@@ -51,7 +51,7 @@ let canvas, ctx, particles = [];
 function initCanvasParticles() {
     canvas = document.getElementById('festiveCanvas');
     ctx = canvas.getContext('2d');
-    
+
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
@@ -159,7 +159,7 @@ function playNote(freq, duration, type = 'sine', gainVal = 0.1) {
         gain.connect(ctx.destination);
         osc.start();
         osc.stop(ctx.currentTime + duration);
-    } catch (e) {}
+    } catch (e) { }
 }
 
 function playSFX(name) {
@@ -195,7 +195,7 @@ function toggleFestiveMusic() {
     } else {
         isAudioPlaying = true;
         btnText.innerText = 'Pause Music';
-        
+
         const notes = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50];
         let step = 0;
 
@@ -239,7 +239,7 @@ function applyPresetMessage() {
     const select = document.getElementById('presetMessages');
     const textarea = document.getElementById('customMessage');
     if (!select || !textarea) return;
-    
+
     if (select.value === 'custom') {
         textarea.value = '';
         textarea.placeholder = "Type your sweet custom note here...";
@@ -269,7 +269,7 @@ function generateWishLink() {
     const recipientName = document.getElementById('recipientName').value.trim();
     const senderName = document.getElementById('senderName').value.trim();
     let message = document.getElementById('customMessage').value.trim();
-    
+
     if (!message) {
         message = PRESETS.msg1;
     }
@@ -295,7 +295,7 @@ function generateWishLink() {
 
     // Setup WhatsApp Share Link
     const waText = `✨ *Happy Raksha Bandhan!* 🌸\n\nHey ${recipientName}! I created a cute animated Raksha Bandhan envelope for you. Tap the link to open it: \n\n👉 ${shareUrl}`;
-    
+
     document.getElementById('whatsappShareBtn').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`;
 }
 
@@ -303,7 +303,7 @@ function copyGeneratedLink() {
     const input = document.getElementById('generatedLinkInput');
     input.select();
     input.setSelectionRange(0, 99999);
-    
+
     navigator.clipboard.writeText(input.value).then(() => {
         playSFX('tap');
         const copyBtnText = document.getElementById('copyBtnText');
@@ -323,7 +323,7 @@ function previewCurrentWish() {
 
 function checkUrlParamsAndRender() {
     const urlParams = new URLSearchParams(window.location.search);
-    
+
     if (urlParams.has('to') && urlParams.has('fr')) {
         let msg = '';
         try {
@@ -400,7 +400,7 @@ function openCreatorMode() {
     document.getElementById('envelopeWrapper').classList.remove('open');
     document.getElementById('creatorView').classList.remove('hidden');
     document.getElementById('homeBtn').classList.add('hidden');
-    
+
     applyPresetMessage();
 }
 

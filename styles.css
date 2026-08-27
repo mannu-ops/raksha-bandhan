@@ -704,12 +704,12 @@ body {
     100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* SMOOTH 360-DEGREE ROUND & ROUND AARTI ROTATION */
+/* FIXED-POSITION SMOOTH IN-PLACE ROTATION FOR AARTI THALI */
 .aarti-thali-group {
     cursor: pointer;
+    transform-origin: 100px 148px;
     transform-box: fill-box;
-    transform-origin: center;
-    transition: transform 0.3s ease;
+    transition: filter 0.3s ease;
 }
 
 .aarti-thali-group:hover {
@@ -717,15 +717,15 @@ body {
 }
 
 .aarti-thali-group.waving-aarti {
-    animation: smoothRoundAarti 1.8s linear infinite;
+    animation: spinFixedInPlace 1.4s linear infinite;
 }
 
-@keyframes smoothRoundAarti {
+@keyframes spinFixedInPlace {
     0% {
-        transform: rotate(0deg) scale(1.05);
+        transform: rotate(0deg);
     }
     100% {
-        transform: rotate(360deg) scale(1.05);
+        transform: rotate(360deg);
     }
 }
 

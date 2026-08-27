@@ -35,6 +35,9 @@ const GIFT_DATA = {
 document.addEventListener('DOMContentLoaded', () => {
     initCanvasParticles();
     checkUrlParamsAndRender();
+    
+    // Pre-fill default selected preset message into textarea on first load
+    applyPresetMessage();
 
     // Event listener for audio toggle button
     document.getElementById('musicToggle').addEventListener('click', toggleFestiveMusic);
@@ -220,11 +223,44 @@ function updateRoleTheme() {
     playSFX('tap');
 }
 
+function updateGiftTheme() {
+    document.querySelectorAll('.gift-card').forEach(card => {
+        const radio = card.querySelector('input[type="radio"]');
+        if (radio && radio.checked) {
+            card.classList.add('selected');
+        } else {
+            card.classList.remove('selected');
+        }
+    });
+    playSFX('tap');
+}
+
+// FIX: Automatically clears text when "Custom Message" option is selected from dropdown
 function applyPresetMessage() {
     const select = document.getElementById('presetMessages');
     const textarea = document.getElementById('customMessage');
-    if (select.value !== 'custom' && PRESETS[select.value]) {
+    if (!select || !textarea) return;
+    
+    if (select.value === 'custom') {
+        textarea.value = ''; // Clears text so it becomes blank for user to type
+        textarea.placeholder = "Type your sweet custom note here...";
+        textarea.focus();
+    } else if (PRESETS[select.value]) {
         textarea.value = PRESETS[select.value];
+    }
+}
+
+// FIX: Automatically clears text when user clicks/taps into textarea if preset is currently active
+function clearIfPreset() {
+    const select = document.getElementById('presetMessages');
+    const textarea = document.getElementById('customMessage');
+    if (!select || !textarea) return;
+
+    const isCurrentPreset = Object.values(PRESETS).some(p => p.trim() === textarea.value.trim());
+
+    if (isCurrentPreset || select.value !== 'custom') {
+        select.value = 'custom';
+        textarea.value = '';
     }
 }
 
@@ -366,6 +402,9 @@ function openCreatorMode() {
     document.getElementById('envelopeWrapper').classList.remove('open');
     document.getElementById('creatorView').classList.remove('hidden');
     document.getElementById('homeBtn').classList.add('hidden');
+    
+    // Ensure default message is pre-filled when opening creator mode
+    applyPresetMessage();
 }
 
 

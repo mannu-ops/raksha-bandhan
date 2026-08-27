@@ -113,7 +113,8 @@
                         <option value="msg3">🎁 "Wishing the cutest sibling a very Happy Raksha Bandhan! Stay blessed!"</option>
                         <option value="msg4">✨ "On this Rakhi, I promise to always be by your side. Sending virtual sweets!"</option>
                     </select>
-                    <textarea id="customMessage" class="custom-textarea" placeholder="Type your sweet custom note..." maxlength="200"></textarea>
+                    <!-- Added onfocus="clearIfPreset()" so tapping text area clears it for custom typing -->
+                    <textarea id="customMessage" class="custom-textarea" placeholder="Type your sweet custom note..." maxlength="200" onfocus="clearIfPreset()"></textarea>
                 </div>
 
                 <!-- Step 4: Virtual Gift Choice -->
@@ -121,22 +122,22 @@
                     <label class="form-label"><i class="fas fa-gift"></i> Select a Cute Gift</label>
                     <div class="gift-grid">
                         <label class="gift-card selected" for="giftKaju">
-                            <input type="radio" id="giftKaju" name="virtualGift" value="kaju_katli" checked>
+                            <input type="radio" id="giftKaju" name="virtualGift" value="kaju_katli" checked onchange="updateGiftTheme()">
                             <span class="gift-emoji">🍬</span>
                             <span class="gift-name">Kaju Katli</span>
                         </label>
                         <label class="gift-card" for="giftChoco">
-                            <input type="radio" id="giftChoco" name="virtualGift" value="chocolates">
+                            <input type="radio" id="giftChoco" name="virtualGift" value="chocolates" onchange="updateGiftTheme()">
                             <span class="gift-emoji">🍫</span>
                             <span class="gift-name">Silk Choco</span>
                         </label>
                         <label class="gift-card" for="giftShagun">
-                            <input type="radio" id="giftShagun" name="virtualGift" value="shagun">
+                            <input type="radio" id="giftShagun" name="virtualGift" value="shagun" onchange="updateGiftTheme()">
                             <span class="gift-emoji">🧧</span>
                             <span class="gift-name">Shagun</span>
                         </label>
                         <label class="gift-card" for="giftTeddy">
-                            <input type="radio" id="giftTeddy" name="virtualGift" value="teddy">
+                            <input type="radio" id="giftTeddy" name="virtualGift" value="teddy" onchange="updateGiftTheme()">
                             <span class="gift-emoji">🧸</span>
                             <span class="gift-name">Teddy Bear</span>
                         </label>
@@ -233,7 +234,7 @@
                         <div class="sub-greeting" id="displaySubtitleGreeting">Happy Raksha Bandhan! 💖</div>
                     </div>
 
-                    <!-- Letter Body Text - NO OVERFLOW -->
+                    <!-- Letter Body Text -->
                     <div class="letter-body">
                         <div class="quote-mark">“</div>
                         <p id="displayMessageText" class="handwritten-text">

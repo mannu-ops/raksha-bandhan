@@ -1,6 +1,5 @@
 /* ==========================================
    RAKSHA BANDHAN ZERO-SCROLL DESIGN SYSTEM
-   NO OVERFLOW FIX FOR CUSTOM MESSAGES & CARDS
    ========================================== */
 
 :root {
@@ -120,7 +119,7 @@ body {
     border-color: var(--primary-magenta);
 }
 
-/* App Main Container - Fits Exactly 100dvh */
+/* App Main Container */
 .app-container {
     position: relative;
     z-index: 5;
@@ -237,7 +236,7 @@ body {
 .role-card input[type="radio"] { display: none; }
 .role-icon { font-size: clamp(1.1rem, 2.5vh, 1.4rem); }
 .role-text-wrap { text-align: left; }
-.role-title { font-weight: 700; color: var(--dark-magenta); font-size: clamp(0.75rem, 1.7vh, 0.85rem); line-height: 1.1; }
+.role-title { font-weight: 700; color: var(--dark-magenta); font-size: clamp(0.75rem, 1.7vh, 0.88rem); line-height: 1.1; }
 .role-desc { font-size: 0.62rem; color: var(--text-muted); }
 
 .check-mark {
@@ -249,12 +248,14 @@ body {
     opacity: 0;
 }
 
+.role-card:has(input[type="radio"]:checked),
 .role-card.selected {
-    border-color: var(--primary-magenta);
-    background: var(--pink-light);
+    border-color: var(--primary-magenta) !important;
+    background: var(--pink-light) !important;
     box-shadow: 0 3px 10px rgba(216, 27, 96, 0.12);
 }
 
+.role-card:has(input[type="radio"]:checked) .check-mark,
 .role-card.selected .check-mark { opacity: 1; }
 
 /* Custom Inputs */
@@ -270,7 +271,6 @@ body {
     outline: none;
 }
 
-/* Custom Textarea for Multi-Line Custom Message */
 .custom-textarea {
     width: 100%;
     padding: 6px 8px;
@@ -293,7 +293,7 @@ body {
     border-color: var(--primary-magenta);
 }
 
-/* Virtual Gift Grid */
+/* Virtual Gift Grid - FIXED SELECTION STYLING */
 .gift-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -314,15 +314,19 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    user-select: none;
 }
 
 .gift-card input[type="radio"] { display: none; }
 .gift-emoji { font-size: clamp(0.95rem, 2.2vh, 1.2rem); display: block; }
 .gift-name { font-size: 0.6rem; font-weight: 600; color: var(--text-dark); display: block; white-space: nowrap; }
 
+.gift-card:has(input[type="radio"]:checked),
 .gift-card.selected {
-    border-color: var(--gold-accent);
-    background: #FFF8E1;
+    border-color: var(--gold-accent) !important;
+    background: #FFF8E1 !important;
+    box-shadow: 0 3px 10px rgba(255, 179, 0, 0.25) !important;
+    transform: scale(1.03);
 }
 
 /* Primary Sparkle Button */
@@ -421,10 +425,7 @@ body {
 }
 
 
-/* ==========================================
-   RECIPIENT VIEW & 3D ENVELOPE (ZERO SCROLL)
-   ========================================== */
-
+/* RECIPIENT VIEW & 3D ENVELOPE */
 #recipientView {
     width: 100%;
     height: 100%;
@@ -444,11 +445,7 @@ body {
     perspective: 1000px;
 }
 
-.envelope-instruction {
-    text-align: center;
-    margin-bottom: 12px;
-}
-
+.envelope-instruction { text-align: center; margin-bottom: 12px; }
 .envelope-instruction #envelopeGreetingText {
     font-family: var(--font-heading);
     font-size: clamp(0.9rem, 2.5vh, 1.15rem);
@@ -458,10 +455,8 @@ body {
 
 .pulse-sparkle { display: inline-block; animation: sparklePulse 1.5s infinite alternate; }
 @keyframes sparklePulse { 0% { transform: scale(1); } 100% { transform: scale(1.3); } }
-
 .tap-hint { font-size: 0.75rem; color: var(--marigold-orange); font-weight: 600; margin-top: 2px; }
 
-/* Envelope 3D Scaling */
 .envelope-wrapper {
     position: relative;
     width: min(240px, 74vw);
@@ -557,7 +552,7 @@ body {
 .envelope-wrapper.open .envelope-paper-preview { transform: translateY(-95px); z-index: 5; }
 
 
-/* EXPANDED LETTER HUB - STRICT NO-OVERFLOW FIX FOR CUSTOM MESSAGE */
+/* EXPANDED LETTER HUB */
 .letter-hub-container {
     width: 100%;
     height: 100%;
@@ -577,7 +572,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: hidden; /* Prevents card overflow */
+    overflow: hidden;
 }
 
 .letter-corner { position: absolute; font-size: 0.9rem; opacity: 0.7; }
@@ -589,29 +584,21 @@ body {
 .highlight-name { color: var(--primary-magenta); background: rgba(255, 215, 0, 0.3); padding: 1px 5px; border-radius: 4px; }
 .sub-greeting { font-size: 0.7rem; color: var(--marigold-orange); font-weight: 600; }
 
-/* FIX: LETTER BODY CONTAINER WITH INTERNAL AUTO SCROLL IF MESSAGE IS VERY LONG */
 .letter-body {
     margin: 4px 0;
     padding: 0 4px;
     width: 100%;
     max-height: clamp(65px, 16vh, 110px);
-    overflow-y: auto; /* Internal clean scrollbar if text is super long */
+    overflow-y: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
 }
 
-/* Custom Scrollbar for Letter Body */
-.letter-body::-webkit-scrollbar {
-    width: 3px;
-}
-.letter-body::-webkit-scrollbar-thumb {
-    background: var(--gold-accent);
-    border-radius: 10px;
-}
+.letter-body::-webkit-scrollbar { width: 3px; }
+.letter-body::-webkit-scrollbar-thumb { background: var(--gold-accent); border-radius: 10px; }
 
-/* FIX: ADAPTIVE HANDWRITTEN TEXT SIZING AND WRAPPING */
 .handwritten-text {
     font-family: var(--font-handwritten);
     font-size: clamp(0.95rem, 2.3vh, 1.25rem);
@@ -633,7 +620,6 @@ body {
 .sender-signature { font-family: var(--font-handwritten); font-size: clamp(1rem, 2.5vh, 1.25rem); font-weight: 700; color: var(--primary-magenta); }
 .divider-glow { border: none; height: 1px; background: linear-gradient(to right, transparent, var(--gold-accent), transparent); margin: 6px 0; }
 
-/* Compact Ritual Tabs */
 .section-title { text-align: center; font-family: var(--font-heading); font-size: 0.8rem; color: var(--dark-magenta); margin-bottom: 4px; }
 .ritual-tabs { display: flex; gap: 3px; justify-content: center; flex-wrap: wrap; margin-bottom: 6px; }
 .tab-btn {
@@ -652,7 +638,6 @@ body {
 .ritual-card h4 { font-family: var(--font-heading); font-size: 0.82rem; color: var(--dark-magenta); margin-bottom: 2px; }
 .tab-desc { font-size: 0.68rem; color: var(--text-muted); margin-bottom: 4px; }
 
-/* Wrist Graphic & Ritual Actions */
 .wrist-display-area { width: 100%; height: 55px; background: linear-gradient(135deg, #FFF3E0, #FCE4EC); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; margin-bottom: 4px; position: relative; }
 .wrist-label { font-size: 0.65rem; color: #888; margin-top: 2px; }
 .wrist-tilak { font-size: 0.95rem; position: absolute; top: -8px; left: 50%; transform: translateX(-50%); }
@@ -666,28 +651,24 @@ body {
 }
 .btn-ritual.primary { background: var(--primary-magenta); color: white; border-color: var(--primary-magenta); }
 
-/* Sister Flower Shower */
 .flower-shower-stage { padding: 4px; text-align: center; }
 .sister-avatar-icon { font-size: 1.7rem; margin-bottom: 2px; }
 .promise-highlight { font-weight: 600; color: var(--primary-magenta); font-size: 0.78rem; margin-bottom: 4px; }
 
-/* Aarti Thali */
 .aarti-thali-interactive { width: 90px; height: 90px; margin: 2px auto; cursor: pointer; }
 .thali-plate { width: 100%; height: 100%; background: radial-gradient(circle, #FFE082 0%, #FFB300 70%, #FF8F00 100%); border-radius: 50%; border: 2.5px solid #FFF8E1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
 .diya-flame { font-size: 0.85rem; animation: flameFlicker 0.4s infinite alternate; }
 .diya-base { font-size: 0.9rem; }
 .thali-sweets-grid { display: flex; gap: 3px; margin-top: 1px; }
-.sweet-item { font-size: 1rem; cursor: pointer; }
+.sweet-item { font-size: 1.1rem; cursor: pointer; }
 .sweets-feedback { font-size: 0.68rem; color: var(--marigold-orange); font-weight: 600; margin-top: 2px; }
 
-/* Gift Unbox */
 .gift-box-interactive { width: 65px; height: 65px; margin: 2px auto; background: var(--pink-light); border: 1.5px dashed var(--primary-magenta); border-radius: var(--radius-md); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; }
 .gift-box-lid { font-size: 1.8rem; }
 .gift-box-body { font-size: 0.58rem; font-weight: 700; color: var(--primary-magenta); }
 .gift-result-card { margin-top: 4px; background: #FFF8E1; border-radius: var(--radius-sm); padding: 4px; }
 .gift-big-emoji { font-size: 1.8rem; }
 
-/* Certificate */
 .certificate-box { background: #FFFDF0; border: 1.5px double var(--gold-accent); padding: 6px; border-radius: var(--radius-sm); text-align: center; }
 .cert-header { font-size: 0.6rem; font-weight: 800; color: var(--marigold-orange); letter-spacing: 1px; }
 .cert-title { font-family: var(--font-heading); font-size: 0.9rem; font-weight: 800; color: var(--dark-magenta); margin-bottom: 1px; }

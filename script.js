@@ -1,425 +1,390 @@
-/* ==========================================
-   RAKSHA BANDHAN INTERACTIVE JAVASCRIPT LOGIC
-   ========================================== */
+// Dynamic Canvas Background Engine
+const canvas = document.getElementById('festiveCanvas');
+const ctx = canvas.getContext('2d');
 
-// Global State
-let currentWishData = {
-    role: 'brother',
-    to: 'Chhotu',
-    from: 'Your Loving Sister',
-    msg: '',
-    gift: 'kaju_katli'
-};
-
-let isAudioPlaying = false;
-let audioCtx = null;
-let bgMusicInterval = null;
-
-// Preset Messages Database (Formatted Multi-line Simple English)
-const PRESETS = {
-    msg1: '🌸 "Bound by love, may our bond\nshine brighter every day!\nHappy Rakhi!"',
-    msg2: '🍫 "From fighting over chocolates to\nalways protecting each other,\nyou are the best sibling ever!"',
-    msg3: '🎁 "Wishing the cutest sibling\na very Happy Raksha Bandhan!\nStay blessed always!"',
-    msg4: '✨ "On this Rakhi, I promise to always\nbe by your side. Sending virtual sweets!"'
-};
-
-// Gift Details Database
-const GIFT_DATA = {
-    kaju_katli: { emoji: '🍬', name: 'Kaju Katli Box', desc: 'Sweet treats for Raksha Bandhan!' },
-    chocolates: { emoji: '🍫', name: 'Cadbury Silk Box', desc: 'A box of delicious chocolates just for you!' },
-    shagun: { emoji: '🧧', name: 'Virtual Cash Shagun', desc: 'Dher saari blessings & happiness!' },
-    teddy: { emoji: '🧸', name: 'Cute Soft Teddy', desc: 'A cute cuddly teddy bear sending infinite hugs!' }
-};
-
-// INITIALIZATION ON DOM READY
-document.addEventListener('DOMContentLoaded', () => {
-    initCanvasParticles();
-    checkUrlParamsAndRender();
-
-    // Pre-fill default selected preset message into textarea on first load
-    applyPresetMessage();
-
-    // Event listener for audio toggle button
-    document.getElementById('musicToggle').addEventListener('click', toggleFestiveMusic);
-});
-
-/* ==========================================
-   1. CANVAS FLOATING MARIGOLD & SPARKLE ENGINE
-   ========================================== */
-let canvas, ctx, particles = [];
-
-function initCanvasParticles() {
-    canvas = document.getElementById('festiveCanvas');
-    ctx = canvas.getContext('2d');
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Generate initial floating marigold petals & sparkles
-    for (let i = 0; i < 28; i++) {
-        particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            radius: Math.random() * 5 + 2.5,
-            color: Math.random() > 0.5 ? '#FFD700' : (Math.random() > 0.5 ? '#FF6F00' : '#FF4081'),
-            speedY: Math.random() * 0.7 + 0.3,
-            speedX: Math.sin(Math.random() * Math.PI) * 0.4,
-            rotation: Math.random() * 360,
-            rotSpeed: (Math.random() - 0.5) * 2,
-            type: Math.random() > 0.3 ? 'petal' : 'sparkle'
-        });
-    }
-
-    animateParticles();
-}
-
+let particles = [];
 function resizeCanvas() {
-    if (!canvas) return;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+class Particle {
+    constructor() {
+        this.reset();
+    }
+    reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = -20;
+        this.size = Math.random() * 8 + 4;
+        this.speedY = Math.random() * 1.5 + 0.8;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.rotation = Math.random() * 360;
+        this.rotSpeed = Math.random() * 2 - 1;
+        this.type = Math.random() > 0.4 ? 'petal' : 'sparkle';
+        this.color = this.type === 'petal' ? (Math.random() > 0.5 ? '#FF8C00' : '#E91E63') : '#FFD700';
+    }
+    update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        this.rotation += this.rotSpeed;
+        if (this.y > canvas.height + 20) {
+            this.reset();
+        }
+    }
+    draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
+        if (this.type === 'petal') {
+            ctx.beginPath();
+            ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        } else {
+            ctx.beginPath();
+            ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#FFD700';
+            ctx.fill();
+        }
+        ctx.restore();
+    }
+}
+
+for (let i = 0; i < 30; i++) {
+    particles.push(new Particle());
 }
 
 function animateParticles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     particles.forEach(p => {
-        p.y += p.speedY;
-        p.x += p.speedX;
-        p.rotation += p.rotSpeed;
-
-        if (p.y > canvas.height + 10) {
-            p.y = -10;
-            p.x = Math.random() * canvas.width;
-        }
-
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate((p.rotation * Math.PI) / 180);
-
-        if (p.type === 'petal') {
-            ctx.beginPath();
-            ctx.fillStyle = p.color;
-            ctx.ellipse(0, 0, p.radius, p.radius * 1.6, 0, 0, Math.PI * 2);
-            ctx.fill();
-        } else {
-            ctx.beginPath();
-            ctx.fillStyle = '#FFF';
-            ctx.arc(0, 0, p.radius * 0.4, 0, Math.PI * 2);
-            ctx.fill();
-        }
-
-        ctx.restore();
+        p.update();
+        p.draw();
     });
-
     requestAnimationFrame(animateParticles);
 }
+animateParticles();
 
-// Confetti Burst Trigger
-function triggerConfettiBurst() {
-    playSFX('confetti');
-    for (let i = 0; i < 30; i++) {
-        particles.push({
-            x: canvas.width / 2 + (Math.random() - 0.5) * 160,
-            y: canvas.height / 2 + (Math.random() - 0.5) * 160,
-            radius: Math.random() * 6 + 3,
-            color: ['#FFD700', '#FF4081', '#00E676', '#00E5FF', '#FF6D00'][Math.floor(Math.random() * 5)],
-            speedY: (Math.random() - 0.7) * 7,
-            speedX: (Math.random() - 0.5) * 7,
-            rotation: Math.random() * 360,
-            rotSpeed: (Math.random() - 0.5) * 8,
-            type: 'petal'
-        });
-    }
-}
+// Web Audio API Festive Sound Synthesizer (No external MP3 required)
+let audioCtx = null;
+let isAudioPlaying = false;
+let bgMusicInterval = null;
 
-
-/* ==========================================
-   2. WEB AUDIO API SYNTHESIZER
-   ========================================== */
-function getAudioContext() {
+function initAudioContext() {
     if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     }
+}
+
+const musicToggleBtn = document.getElementById('musicToggle');
+const musicStatusText = document.getElementById('musicStatusText');
+
+musicToggleBtn.addEventListener('click', () => {
+    initAudioContext();
     if (audioCtx.state === 'suspended') {
         audioCtx.resume();
     }
-    return audioCtx;
-}
-
-function playNote(freq, duration, type = 'sine', gainVal = 0.1) {
-    try {
-        const ctx = getAudioContext();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = type;
-        osc.frequency.value = freq;
-        gain.gain.setValueAtTime(gainVal, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + duration);
-    } catch (e) { }
-}
-
-function playSFX(name) {
-    const ctx = getAudioContext();
-    if (name === 'open') {
-        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
-            setTimeout(() => playNote(freq, 0.4, 'triangle', 0.15), idx * 80);
-        });
-    } else if (name === 'tap') {
-        playNote(880, 0.15, 'sine', 0.1);
-    } else if (name === 'rakhi') {
-        [659.25, 783.99, 987.77].forEach((freq, idx) => {
-            setTimeout(() => playNote(freq, 0.3, 'sine', 0.15), idx * 100);
-        });
-    } else if (name === 'munch') {
-        playNote(300, 0.08, 'square', 0.08);
-        setTimeout(() => playNote(400, 0.08, 'square', 0.08), 80);
-    } else if (name === 'confetti') {
-        [440, 554.37, 659.25, 880, 1108.73].forEach((freq, idx) => {
-            setTimeout(() => playNote(freq, 0.3, 'sine', 0.15), idx * 60);
-        });
-    }
-}
-
-function toggleFestiveMusic() {
-    const btnText = document.getElementById('musicStatusText');
-    const ctx = getAudioContext();
-
     if (isAudioPlaying) {
-        clearInterval(bgMusicInterval);
-        isAudioPlaying = false;
-        btnText.innerText = 'Play Music';
+        stopBgMusic();
     } else {
-        isAudioPlaying = true;
-        btnText.innerText = 'Pause Music';
+        startBgMusic();
+    }
+});
 
-        const notes = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50];
-        let step = 0;
+function playNote(freq, type = 'sine', duration = 0.5, timeOffset = 0) {
+    if (!audioCtx) return;
+    try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
 
-        bgMusicInterval = setInterval(() => {
-            if (!isAudioPlaying) return;
-            const freq = notes[step % notes.length];
-            playNote(freq, 0.6, 'sine', 0.05);
-            if (step % 4 === 0) {
-                playNote(freq / 2, 0.8, 'triangle', 0.04);
-            }
-            step++;
-        }, 320);
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime + timeOffset);
+
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime + timeOffset);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + timeOffset + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(audioCtx.currentTime + timeOffset);
+        osc.stop(audioCtx.currentTime + timeOffset + duration);
+    } catch (e) {
+        console.log("Audio play error", e);
     }
 }
 
+function startBgMusic() {
+    isAudioPlaying = true;
+    musicStatusText.innerText = "Mute Music";
+    musicToggleBtn.classList.add('active');
 
-/* ==========================================
-   3. SENDER FLOW: FORM & LINK GENERATION
-   ========================================== */
+    // Sweet Indian Sitar / Flute Pentatonic Melody Loop
+    const melody = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50, 880.00, 783.99]; // C5, D5, E5, G5, A5, C6
+    let step = 0;
 
-function updateRoleTheme() {
-    const isBrother = document.getElementById('roleBrother').checked;
-    document.querySelector('label[for="roleBrother"]').classList.toggle('selected', isBrother);
-    document.querySelector('label[for="roleSister"]').classList.toggle('selected', !isBrother);
-    playSFX('tap');
-}
-
-function updateGiftTheme() {
-    document.querySelectorAll('.gift-card').forEach(card => {
-        const radio = card.querySelector('input[type="radio"]');
-        if (radio && radio.checked) {
-            card.classList.add('selected');
-        } else {
-            card.classList.remove('selected');
+    bgMusicInterval = setInterval(() => {
+        if (!isAudioPlaying) return;
+        playNote(melody[step % melody.length], 'sine', 0.6);
+        if (step % 2 === 0) {
+            playNote(melody[(step + 2) % melody.length] / 2, 'triangle', 0.8);
         }
-    });
-    playSFX('tap');
+        step++;
+    }, 450);
 }
+
+function stopBgMusic() {
+    isAudioPlaying = false;
+    musicStatusText.innerText = "Play Music";
+    musicToggleBtn.classList.remove('active');
+    if (bgMusicInterval) clearInterval(bgMusicInterval);
+}
+
+// Sound FX for Actions
+function playSFX(type) {
+    initAudioContext();
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    if (type === 'pop') {
+        playNote(600, 'sine', 0.1);
+        playNote(900, 'sine', 0.15, 0.05);
+    } else if (type === 'rakhi') {
+        playNote(523.25, 'sine', 0.2);
+        playNote(659.25, 'sine', 0.2, 0.1);
+        playNote(783.99, 'sine', 0.3, 0.2);
+    } else if (type === 'confetti') {
+        for (let i = 0; i < 5; i++) {
+            playNote(400 + i * 150, 'triangle', 0.1, i * 0.05);
+        }
+    }
+}
+
+// URL Base64 Encoding / Decoding Helpers
+function encodeData(obj) {
+    try {
+        const jsonStr = JSON.stringify(obj);
+        return btoa(encodeURIComponent(jsonStr));
+    } catch (e) {
+        return "";
+    }
+}
+
+function decodeData(str) {
+    try {
+        const jsonStr = decodeURIComponent(atob(str));
+        return JSON.parse(jsonStr);
+    } catch (e) {
+        return null;
+    }
+}
+
+// Global Preset Messages & Dynamic Message Functions
+const presetMessages = {
+    msg1: `Bound by love, may our bond shine brighter every day! Happy Rakhi!`,
+    msg2: `From fighting over chocolates to protecting each other, you are the best!`,
+    msg3: `Wishing the cutest sibling a very Happy Raksha Bandhan! Stay blessed!`,
+    msg4: `On this Rakhi, I promise to always be by your side. Sending virtual sweets!`
+};
 
 function applyPresetMessage() {
     const select = document.getElementById('presetMessages');
     const textarea = document.getElementById('customMessage');
-    if (!select || !textarea) return;
+    const selectedVal = select.value;
 
-    if (select.value === 'custom') {
-        textarea.value = '';
-        textarea.placeholder = "Type your sweet custom note here...";
-        textarea.focus();
-    } else if (PRESETS[select.value]) {
-        textarea.value = PRESETS[select.value];
+    if (selectedVal !== 'custom' && presetMessages[selectedVal]) {
+        textarea.value = presetMessages[selectedVal];
     }
 }
 
-function clearIfPreset() {
+// Automatically switch dropdown to 'Custom' ONLY when user actually types inside textarea
+function onCustomMessageInput() {
     const select = document.getElementById('presetMessages');
-    const textarea = document.getElementById('customMessage');
-    if (!select || !textarea) return;
-
-    const isCurrentPreset = Object.values(PRESETS).some(p => p.trim() === textarea.value.trim());
-
-    if (isCurrentPreset || select.value !== 'custom') {
+    if (select.value !== 'custom') {
         select.value = 'custom';
-        textarea.value = '';
     }
 }
 
-function generateWishLink() {
-    playSFX('open');
-
+function updateRoleTheme() {
     const role = document.querySelector('input[name="recipientRole"]:checked').value;
-    const recipientName = document.getElementById('recipientName').value.trim();
-    const senderName = document.getElementById('senderName').value.trim();
-    let message = document.getElementById('customMessage').value.trim();
+    document.querySelectorAll('.role-card').forEach(card => card.classList.remove('selected'));
+    document.querySelector(`input[name="recipientRole"][value="${role}"]`).closest('.role-card').classList.add('selected');
+}
 
-    if (!message) {
-        message = PRESETS.msg1;
+function updateGiftTheme() {
+    const giftRadio = document.querySelector('input[name="virtualGift"]:checked');
+    if (giftRadio) {
+        const gift = giftRadio.value;
+        document.querySelectorAll('.gift-card').forEach(card => card.classList.remove('selected'));
+        giftRadio.closest('.gift-card').classList.add('selected');
+        window.currentGiftType = gift; // Live update active gift selection!
+    }
+}
+
+// Helper to determine exact chosen gift key regardless of view mode
+function getSelectedGiftKey() {
+    const recipientView = document.getElementById('recipientView');
+    const isRecipientActive = recipientView && !recipientView.classList.contains('hidden');
+
+    // If recipient view (wish card) is active, payload window.currentGiftType HAS TOP PRIORITY!
+    if (isRecipientActive && window.currentGiftType) {
+        return window.currentGiftType;
     }
 
-    const gift = document.querySelector('input[name="virtualGift"]:checked').value;
+    // Inspect currently selected radio in form
+    const giftRadio = document.querySelector('input[name="virtualGift"]:checked');
+    if (giftRadio && giftRadio.value) {
+        window.currentGiftType = giftRadio.value;
+        return giftRadio.value;
+    }
 
-    currentWishData = { role, to: recipientName, from: senderName, msg: message, gift };
+    return window.currentGiftType || 'iphone';
+}
 
-    // Encode parameters in URL query
-    const params = new URLSearchParams({
+// Wish Link Generator
+function generateWishLink() {
+    playSFX('pop');
+    const role = document.querySelector('input[name="recipientRole"]:checked').value;
+    const toName = document.getElementById('recipientName').value.trim();
+    const fromName = document.getElementById('senderName').value.trim();
+    const message = document.getElementById('customMessage').value.trim();
+    const giftRadio = document.querySelector('input[name="virtualGift"]:checked');
+    const gift = giftRadio ? giftRadio.value : 'kaju_katli';
+
+    if (!toName || !fromName) {
+        alert("Please enter both recipient and sender names!");
+        return;
+    }
+
+    window.currentGiftType = gift;
+
+    const payload = {
         r: role,
-        to: recipientName,
-        fr: senderName,
-        m: btoa(unescape(encodeURIComponent(message))),
+        to: toName,
+        fr: fromName,
+        m: (message || presetMessages.msg1).trim(),
         g: gift
-    });
+    };
 
-    const shareUrl = window.location.origin + window.location.pathname + '?' + params.toString();
+    const encoded = encodeData(payload);
+    const fullUrl = `${window.location.origin}${window.location.pathname}?w=${encoded}`;
 
-    // Render Result Box
-    document.getElementById('generatedLinkInput').value = shareUrl;
-    document.getElementById('linkResultCard').classList.remove('hidden');
-
+    document.getElementById('generatedLinkInput').value = fullUrl;
+    
     // Setup WhatsApp Share Link
-    const waText = `✨ *Happy Raksha Bandhan!* 🌸\n\nHey ${recipientName}! I created a cute animated Raksha Bandhan envelope for you. Tap the link to open it: \n\n👉 ${shareUrl}`;
+    const waText = encodeURIComponent(`🌸 Hey ${toName}! I sent you a special interactive Raksha Bandhan greeting envelope! 💌✨ Tap link to open:\n${fullUrl}`);
+    document.getElementById('whatsappShareBtn').href = `https://api.whatsapp.com/send?text=${waText}`;
 
-    document.getElementById('whatsappShareBtn').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`;
+    document.getElementById('linkResultCard').classList.remove('hidden');
+    triggerConfettiBurst();
 }
 
 function copyGeneratedLink() {
     const input = document.getElementById('generatedLinkInput');
     input.select();
     input.setSelectionRange(0, 99999);
-
     navigator.clipboard.writeText(input.value).then(() => {
-        playSFX('tap');
         const copyBtnText = document.getElementById('copyBtnText');
-        copyBtnText.innerText = 'Copied! ✅';
-        setTimeout(() => copyBtnText.innerText = 'Copy', 2000);
+        copyBtnText.innerText = "Copied! ✓";
+        playSFX('pop');
+        setTimeout(() => copyBtnText.innerText = "Copy", 2000);
     });
 }
 
 function previewCurrentWish() {
-    renderWishView(currentWishData);
-}
-
-
-/* ==========================================
-   4. RECIPIENT FLOW: ENVELOPE & WISH RENDERING
-   ========================================== */
-
-function checkUrlParamsAndRender() {
-    const urlParams = new URLSearchParams(window.location.search);
-
-    if (urlParams.has('to') && urlParams.has('fr')) {
-        let msg = '';
-        try {
-            msg = decodeURIComponent(escape(atob(urlParams.get('m'))));
-        } catch (e) {
-            msg = PRESETS.msg1;
-        }
-
-        currentWishData = {
-            role: urlParams.get('r') || 'brother',
-            to: urlParams.get('to') || 'Sibling',
-            from: urlParams.get('fr') || 'Your Sibling',
-            msg: msg,
-            gift: urlParams.get('g') || 'kaju_katli'
-        };
-
-        renderWishView(currentWishData);
+    const giftRadio = document.querySelector('input[name="virtualGift"]:checked');
+    if (giftRadio) {
+        window.currentGiftType = giftRadio.value;
+    }
+    const link = document.getElementById('generatedLinkInput').value;
+    if (link) {
+        window.location.href = link;
     }
 }
 
-function renderWishView(data) {
-    // Hide Creator, Show Recipient View
+// Recipient Mode View Controller
+function checkUrlParametersAndRender() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const wishDataEncoded = urlParams.get('w');
+
+    if (wishDataEncoded) {
+        const data = decodeData(wishDataEncoded);
+        if (data) {
+            renderRecipientView(data);
+            return;
+        }
+    }
+
+    // Default: Show Creator View
+    openCreatorMode();
+}
+
+function openCreatorMode() {
+    document.getElementById('creatorView').classList.remove('hidden');
+    document.getElementById('recipientView').classList.add('hidden');
+    document.getElementById('homeBtn').classList.add('hidden');
+}
+
+function renderRecipientView(data) {
     document.getElementById('creatorView').classList.add('hidden');
     document.getElementById('recipientView').classList.remove('hidden');
     document.getElementById('homeBtn').classList.remove('hidden');
 
-    // Populate Letter Data
-    document.getElementById('displayRecipientName').innerText = data.to;
-    document.getElementById('displaySenderName').innerText = `~ ${data.from}`;
-    document.getElementById('displayMessageText').innerText = data.msg;
-    document.getElementById('certRecipientName').innerText = data.to;
-    document.getElementById('certSenderSig').innerText = data.from;
-
-    // Greeting Customization based on Brother / Sister
-    if (data.role === 'brother') {
-        document.getElementById('envelopeGreetingText').innerText = `Special Raksha Bandhan Envelope for You, ${data.to}! 👦`;
-        document.getElementById('brotherRitualView').classList.remove('hidden');
-        document.getElementById('sisterRitualView').classList.add('hidden');
-        document.getElementById('ritualTab1Label').innerText = '🌸 Virtual Rakhi & Aarti';
-    } else {
-        document.getElementById('envelopeGreetingText').innerText = `Special Raksha Bandhan Wish for You, ${data.to}! 👧`;
-        document.getElementById('brotherRitualView').classList.add('hidden');
-        document.getElementById('sisterRitualView').classList.remove('hidden');
-        document.getElementById('ritualTab1Label').innerText = '🌸 Sister Love';
+    // Populate Names & Message (Trim leading/trailing quote characters or whitespace)
+    let cleanMessage = (data.m || '').trim();
+    if (cleanMessage.startsWith('"') && cleanMessage.endsWith('"')) {
+        cleanMessage = cleanMessage.substring(1, cleanMessage.length - 1).trim();
     }
 
-    // Gift Unbox Setup
-    const gift = GIFT_DATA[data.gift] || GIFT_DATA.kaju_katli;
-    document.getElementById('unboxedGiftEmoji').innerText = gift.emoji;
-    document.getElementById('unboxedGiftTitle').innerText = gift.name;
-    document.getElementById('unboxedGiftDesc').innerText = `"${gift.desc}"`;
+    document.getElementById('envelopeGreetingText').innerText = `Special Raksha Bandhan Wish for ${data.to}!`;
+    document.getElementById('displayRecipientName').innerText = data.to;
+    document.getElementById('displaySenderName').innerText = `~ ${data.fr}`;
+    document.getElementById('displayMessageText').innerText = cleanMessage;
+
+    if (data.r === 'sister') {
+        document.getElementById('displaySubtitleGreeting').innerText = "Happy Raksha Bandhan to my Sweetest Sister! 💖";
+        document.getElementById('brotherRitualView').classList.add('hidden');
+        document.getElementById('sisterRitualView').classList.remove('hidden');
+    } else {
+        document.getElementById('displaySubtitleGreeting').innerText = "Happy Raksha Bandhan to my Dearest Brother! 👦💖";
+        document.getElementById('brotherRitualView').classList.remove('hidden');
+        document.getElementById('sisterRitualView').classList.add('hidden');
+    }
+
+    // Store Unboxed Gift Data strictly from URL payload
+    window.currentGiftType = data.g || 'kaju_katli';
 }
 
+// Envelope 3D Unfolding Interaction
 function openEnvelope() {
+    playSFX('pop');
     const wrapper = document.getElementById('envelopeWrapper');
-    if (wrapper.classList.contains('open')) return;
+    const envelopeStage = document.getElementById('envelopeStage');
+    const letterHub = document.getElementById('letterHub');
 
     wrapper.classList.add('open');
-    playSFX('open');
-    triggerConfettiBurst();
 
-    // Transition to full letter hub
     setTimeout(() => {
-        document.getElementById('envelopeStage').classList.add('hidden');
-        document.getElementById('letterHub').classList.remove('hidden');
-    }, 1400);
+        envelopeStage.classList.add('hidden');
+        letterHub.classList.remove('hidden');
+        triggerConfettiBurst();
+    }, 1100);
 }
 
-function openCreatorMode() {
-    window.history.pushState({}, document.title, window.location.pathname);
-    document.getElementById('recipientView').classList.add('hidden');
-    document.getElementById('envelopeStage').classList.remove('hidden');
-    document.getElementById('letterHub').classList.add('hidden');
-    document.getElementById('envelopeWrapper').classList.remove('open');
-    document.getElementById('creatorView').classList.remove('hidden');
-    document.getElementById('homeBtn').classList.add('hidden');
-
-    applyPresetMessage();
+// Dynamic Active Button Toggle Helper for Ritual Actions
+function setActiveRitualBtn(btnElement) {
+    if (!btnElement) return;
+    document.querySelectorAll('.ritual-actions .btn-ritual').forEach(btn => {
+        btn.classList.remove('active', 'primary');
+    });
+    btnElement.classList.add('active', 'primary');
 }
 
-
-/* ==========================================
-   5. INTERACTIVE RITUALS & MINI GAMES
-   ========================================== */
-
-function switchRitualTab(tabId) {
-    playSFX('tap');
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active-tab'));
-
-    event.currentTarget.classList.add('active');
-    document.getElementById(tabId).classList.add('active-tab');
-}
-
-// Brother Ritual Functions - ANIMATED CUTE CHARACTER & AARTI THALI
-function performTilak() {
+// Brother Ritual Functions - ANIMATED CUTE CHARACTER
+function performTilak(evt) {
+    if (evt && evt.currentTarget) setActiveRitualBtn(evt.currentTarget);
     playSFX('rakhi');
     const tilak = document.getElementById('svgTilakGroup');
     const speech = document.getElementById('characterSpeechBubble');
@@ -438,7 +403,8 @@ function performTilak() {
     triggerConfettiBurst();
 }
 
-function performTieRakhi() {
+function performTieRakhi(evt) {
+    if (evt && evt.currentTarget) setActiveRitualBtn(evt.currentTarget);
     playSFX('rakhi');
     const rakhi = document.getElementById('svgRakhiGroup');
     const speech = document.getElementById('characterSpeechBubble');
@@ -457,7 +423,9 @@ function performTieRakhi() {
     triggerConfettiBurst();
 }
 
-function performAarti() {
+// PERFORM AARTI FUNCTION (REVEALS AARTI THALI & WAVES IN CIRCULAR LOOP)
+function performAarti(evt) {
+    if (evt && evt.currentTarget) setActiveRitualBtn(evt.currentTarget);
     playSFX('rakhi');
     const thali = document.getElementById('svgAartiThaliGroup');
     const speech = document.getElementById('characterSpeechBubble');
@@ -465,6 +433,7 @@ function performAarti() {
     const openEyes = document.getElementById('characterEyesOpen');
 
     if (thali) {
+        thali.classList.remove('hidden'); // Reveal Aarti Thali ONLY on Aarti button tap!
         thali.classList.add('waving-aarti');
         setTimeout(() => thali.classList.remove('waving-aarti'), 3600);
     }
@@ -480,26 +449,99 @@ function performAarti() {
     triggerConfettiBurst();
 }
 
+// PERFORM UNBOX GIFT FUNCTION
+function performUnboxGift(evt) {
+    if (evt && evt.currentTarget && evt.currentTarget.classList.contains('btn-ritual')) {
+        setActiveRitualBtn(evt.currentTarget);
+    }
+
+    const giftGroup = document.getElementById('svgGiftBoxGroup');
+    const giftLid = document.getElementById('svgGiftLid');
+    const unboxedItem = document.getElementById('svgUnboxedItem');
+    const speech = document.getElementById('characterSpeechBubble');
+    const happyEyes = document.getElementById('characterEyesHappy');
+    const openEyes = document.getElementById('characterEyesOpen');
+
+    // Show Gift Box on the side
+    if (giftGroup) giftGroup.classList.remove('hidden');
+
+    playSFX('confetti');
+    triggerConfettiBurst();
+
+    // Determine exact selected gift key
+    const giftKey = getSelectedGiftKey();
+
+    const giftsMap = {
+        kaju_katli: { name: 'Kaju Katli', graphicId: 'itemKaju', emoji: '🍬' },
+        chocolates: { name: 'Silk Chocolate', graphicId: 'itemChoco', emoji: '🍫' },
+        iphone: { name: 'iPhone 16 Pro', graphicId: 'itemIphone', emoji: '📱' },
+        shagun: { name: 'Shagun Lifafa', graphicId: 'itemShagun', emoji: '🧧' },
+        teddy: { name: 'Teddy Bear', graphicId: 'itemTeddy', emoji: '🧸' }
+    };
+    const chosen = giftsMap[giftKey] || giftsMap.kaju_katli;
+
+    // 2. Hide all gift vector graphics first, then show target graphic
+    document.querySelectorAll('.gift-graphic').forEach(el => el.classList.add('hidden'));
+    const targetGraphic = document.getElementById(chosen.graphicId);
+    if (targetGraphic) targetGraphic.classList.remove('hidden');
+
+    // 3. Animate Lid opening
+    if (giftLid) {
+        giftLid.style.transform = 'translateY(-20px) rotate(-22deg)';
+    }
+
+    if (unboxedItem) unboxedItem.classList.remove('hidden');
+
+    if (happyEyes && openEyes) {
+        openEyes.classList.add('hidden');
+        happyEyes.classList.remove('hidden');
+    }
+
+    if (speech) {
+        speech.innerText = `"Yay! Here is your ${chosen.name}!" ${chosen.emoji}✨`;
+        speech.classList.remove('hidden');
+    }
+}
+
 function showerLoveFlowers() {
     playSFX('confetti');
     triggerConfettiBurst();
 }
 
+// Sweet Feeding Speech React
 function feedSweet(sweetName) {
-    event.stopPropagation();
-    playSFX('munch');
+    playSFX('pop');
     const speech = document.getElementById('characterSpeechBubble');
     if (speech) {
-        speech.innerText = `Yummy! ${sweetName}! 😋✨`;
+        speech.innerText = `"Yummy ${sweetName}!" 😋🍬`;
         speech.classList.remove('hidden');
     }
     triggerConfettiBurst();
 }
 
-// Gift Unboxing Function
-function unboxVirtualGift() {
-    playSFX('open');
-    document.getElementById('giftBoxElement').classList.add('hidden');
-    document.getElementById('unboxedGiftResult').classList.remove('hidden');
-    triggerConfettiBurst();
+// Confetti Particle Explosion
+function triggerConfettiBurst() {
+    for (let i = 0; i < 25; i++) {
+        const p = new Particle();
+        p.x = canvas.width / 2 + (Math.random() * 100 - 50);
+        p.y = canvas.height / 2 + (Math.random() * 100 - 50);
+        p.speedY = (Math.random() - 0.5) * 6;
+        p.speedX = (Math.random() - 0.5) * 6;
+        particles.push(p);
+    }
+    setTimeout(() => {
+        particles.splice(30);
+    }, 2000);
 }
+
+// DOM Initialization
+document.addEventListener('DOMContentLoaded', () => {
+    // Sync default checked gift option on load
+    updateGiftTheme();
+    
+    // Auto-fill preset message on initial load so text area is populated
+    applyPresetMessage();
+    
+    // Check URL query string for recipient wish payload
+    checkUrlParametersAndRender();
+});

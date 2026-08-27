@@ -43,6 +43,12 @@
         </button>
     </div>
 
+    <!-- Bottom Corner Instagram Branding Badge -->
+    <a href="https://www.instagram.com/theskillvaults/" target="_blank" rel="noopener noreferrer" class="insta-corner-badge" title="Built by @theskillvaults on Instagram">
+        <i class="fab fa-instagram"></i>
+        <span>Built by <strong>@theskillvaults</strong></span>
+    </a>
+
     <!-- Main Container - 100dvh Single Screen -->
     <main class="app-container">
 
@@ -113,10 +119,10 @@
                         <option value="msg3">🎁 "Wishing the cutest sibling a very Happy Raksha Bandhan! Stay blessed!"</option>
                         <option value="msg4">✨ "On this Rakhi, I promise to always be by your side. Sending virtual sweets!"</option>
                     </select>
-                    <textarea id="customMessage" class="custom-textarea" placeholder="Type your sweet custom note..." maxlength="200" onfocus="clearIfPreset()"></textarea>
+                    <textarea id="customMessage" class="custom-textarea" placeholder="Type your sweet custom note..." maxlength="200" oninput="onCustomMessageInput()"></textarea>
                 </div>
 
-                <!-- Step 4: Virtual Gift Choice -->
+                <!-- Step 4: Virtual Gift Choice (5 GIFTS INCLUDING IPHONE 📱) -->
                 <div class="form-group">
                     <label class="form-label"><i class="fas fa-gift"></i> Select a Cute Gift</label>
                     <div class="gift-grid">
@@ -129,6 +135,11 @@
                             <input type="radio" id="giftChoco" name="virtualGift" value="chocolates" onchange="updateGiftTheme()">
                             <span class="gift-emoji">🍫</span>
                             <span class="gift-name">Silk Choco</span>
+                        </label>
+                        <label class="gift-card" for="giftIphone">
+                            <input type="radio" id="giftIphone" name="virtualGift" value="iphone" onchange="updateGiftTheme()">
+                            <span class="gift-emoji">📱</span>
+                            <span class="gift-name">iPhone</span>
                         </label>
                         <label class="gift-card" for="giftShagun">
                             <input type="radio" id="giftShagun" name="virtualGift" value="shagun" onchange="updateGiftTheme()">
@@ -209,7 +220,7 @@
                         <!-- Wax Seal Button -->
                         <div class="wax-seal" id="waxSeal">
                             <div class="seal-inner">
-                                <span class="seal-icon">🪔</span>
+                                <span class="seal-icon">🌸</span>
                                 <span class="seal-text">OPEN</span>
                             </div>
                         </div>
@@ -226,7 +237,7 @@
                     <div class="letter-corner top-right">🌸</div>
 
                     <div class="letter-header text-center">
-                        <div class="rakhi-motif">🪔 🌸 ✨ 🌸 🪔</div>
+                        <div class="rakhi-motif">🌸 ✨ 🌸 ✨ 🌸</div>
                         <h2 class="letter-salutation">
                             Dear <span id="displayRecipientName" class="highlight-name">Chhotu</span>,
                         </h2>
@@ -235,11 +246,9 @@
 
                     <!-- Letter Body Text -->
                     <div class="letter-body">
-                        <div class="quote-mark">“</div>
-                        <p id="displayMessageText" class="handwritten-text">
-                            Bound by love, may our bond shine brighter every day!
-                        </p>
-                        <div class="quote-mark text-right">”</div>
+                        <span class="quote-mark">“</span>
+                        <p id="displayMessageText" class="handwritten-text">Bound by love, may our bond shine brighter every day!</p>
+                        <span class="quote-mark">”</span>
                     </div>
 
                     <div class="letter-footer text-right">
@@ -249,158 +258,249 @@
 
                     <hr class="divider-glow">
 
-                    <!-- INTERACTIVE RITUAL TABS -->
+                    <!-- INTERACTIVE FESTIVE RITUAL SECTION -->
                     <div class="interactive-section">
                         <h3 class="section-title"><i class="fas fa-sparkles"></i> Virtual Celebration Rituals <i class="fas fa-sparkles"></i></h3>
-                        
-                        <div class="ritual-tabs">
-                            <button class="tab-btn active" onclick="switchRitualTab('rakhiTab')">
-                                <span id="ritualTab1Label">🌸 Virtual Rakhi & Aarti</span>
-                            </button>
-                            <button class="tab-btn" onclick="switchRitualTab('giftTab')">
-                                🎁 Unbox Gift
-                            </button>
-                            <button class="tab-btn" onclick="switchRitualTab('certificateTab')">
-                                📜 Sibling Award
-                            </button>
-                        </div>
 
-                        <!-- TAB 1: CUTE CURLY CHARACTER WITH AARTI THALI CLOSE UNDER CHIN -->
+                        <!-- ULTRA-CUTE CHIBI CHARACTER SCENE -->
                         <div id="rakhiTab" class="tab-content active-tab">
                             <div class="ritual-card">
                                 <div id="brotherRitualView">
                                     <h4>Perform Tilak, Rakhi & Aarti Rituals!</h4>
-                                    <p class="tab-desc">Tap buttons to apply Tilak, tie Rakhi & wave golden Aarti Thali!</p>
+                                    <p class="tab-desc">Tap buttons in order to complete Raksha Bandhan rituals!</p>
                                     
-                                    <!-- ANIMATED CUTE CHARACTER SCENE WITH SMALL AARTI THALI RIGHT UNDER CHIN -->
+                                    <!-- ANIMATED ULTRA-CUTE ANIME CHIBI CHARACTER STAGE -->
                                     <div class="character-ritual-stage">
                                         <div id="characterSpeechBubble" class="speech-bubble hidden">"Yay! Thank you!" 🥰</div>
-                                        <svg viewBox="0 0 200 150" class="chibi-character-svg">
-                                            <!-- Festive Background Aura Halo -->
-                                            <circle cx="100" cy="70" r="65" fill="rgba(255, 243, 224, 0.75)" stroke="#FFD54F" stroke-width="1.5" stroke-dasharray="4,3"/>
-
-                                            <!-- 1. FLUFFY CURLY HAIR BACK CLUSTER -->
-                                            <g fill="#2D1B0F">
-                                                <circle cx="65" cy="40" r="18"/>
-                                                <circle cx="82" cy="30" r="20"/>
-                                                <circle cx="100" cy="26" r="21"/>
-                                                <circle cx="118" cy="33" r="20"/>
-                                                <circle cx="135" cy="40" r="18"/>
-
-                                                <circle cx="48" cy="57" r="16"/>
-                                                <circle cx="152" cy="57" r="16"/>
-                                                <circle cx="46" cy="73" r="15"/>
-                                                <circle cx="154" cy="73" r="15"/>
-                                            </g>
-
-                                            <!-- Ears -->
-                                            <circle cx="56" cy="70" r="9" fill="#FFCC80"/>
-                                            <circle cx="144" cy="70" r="9" fill="#FFCC80"/>
-
-                                            <!-- Face Skin (Clear Open Forehead Space) -->
-                                            <ellipse cx="100" cy="70" rx="38" ry="34" fill="#FFE0B2"/>
-
-                                            <!-- 2. FRONT CURLY HAIR ACCENTS -->
-                                            <g fill="#3D2716">
-                                                <circle cx="64" cy="45" r="11"/>
-                                                <circle cx="76" cy="40" r="10"/>
-                                                <circle cx="136" cy="45" r="11"/>
-                                                <circle cx="124" cy="40" r="10"/>
-                                                <circle cx="100" cy="33" r="8"/>
-                                            </g>
-
-                                            <!-- Cute Hair Bow Ribbon -->
-                                            <path d="M 92 29 Q 100 23 108 29 Q 100 35 92 29 Z" fill="#FF4081"/>
-                                            <circle cx="100" cy="29" r="2.5" fill="#FFD700"/>
-
-                                            <!-- Eyes: Normal Open State -->
-                                            <g id="characterEyesOpen">
-                                                <ellipse cx="83" cy="72" rx="4.5" ry="5.5" fill="#212121"/>
-                                                <circle cx="81" cy="70" r="1.8" fill="#FFF"/>
-                                                <ellipse cx="117" cy="72" rx="4.5" ry="5.5" fill="#212121"/>
-                                                <circle cx="115" cy="70" r="1.8" fill="#FFF"/>
-                                            </g>
-                                            
-                                            <!-- Eyes: Happy Curved Arcs -->
-                                            <g id="characterEyesHappy" class="hidden">
-                                                <path d="M 77 74 Q 83 67 89 74" stroke="#212121" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                                                <path d="M 111 74 Q 117 67 123 74" stroke="#212121" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                                            </g>
-
-                                            <!-- Cute Rosy Blushing Cheeks -->
-                                            <ellipse cx="73" cy="79" rx="6" ry="3.5" fill="#FF80AB" opacity="0.65"/>
-                                            <ellipse cx="127" cy="79" rx="6" ry="3.5" fill="#FF80AB" opacity="0.65"/>
-
-                                            <!-- Smile -->
-                                            <path d="M 93 82 Q 100 89 107 82" stroke="#D81B60" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-
-                                            <!-- FOREHEAD TILAK GRAPHIC -->
-                                            <g id="svgTilakGroup" class="tilak-group hidden">
-                                                <circle cx="100" cy="52" r="5" fill="#D81B60"/>
-                                                <circle cx="100" cy="52" r="7.5" stroke="#FFD700" stroke-width="1.2" fill="none"/>
-                                                <circle cx="98" cy="49.5" r="1.2" fill="#FFF8E1"/>
-                                                <circle cx="102" cy="50.5" r="1.2" fill="#FFF8E1"/>
-                                                <circle cx="100" cy="55.5" r="1.2" fill="#FFF8E1"/>
-                                            </g>
-
-                                            <!-- Extended Arm & Hand for Rakhi Tying -->
-                                            <g class="arm-group">
-                                                <path d="M 122 103 Q 142 113 152 121" stroke="#E91E63" stroke-width="14" stroke-linecap="round" fill="none"/>
-                                                <path d="M 148 119 Q 160 129 168 135" stroke="#FFE0B2" stroke-width="10" stroke-linecap="round" fill="none"/>
-                                                <circle cx="170" cy="137" r="6" fill="#FFE0B2"/>
-
-                                                <!-- Tied Rakhi Graphic -->
-                                                <g id="svgRakhiGroup" class="rakhi-group hidden">
-                                                    <path d="M 136 113 Q 152 123 174 139" stroke="#FFD700" stroke-width="2.5" fill="none"/>
-                                                    <path d="M 140 117 Q 154 126 170 137" stroke="#D81B60" stroke-width="2.5" stroke-dasharray="3,2" fill="none"/>
-                                                    <circle cx="154" cy="125" r="7" fill="#FFC107"/>
-                                                    <circle cx="154" cy="125" r="4.5" fill="#E91E63"/>
-                                                    <text x="154" y="128" font-size="7" text-anchor="middle" fill="#FFF">🌸</text>
-                                                </g>
-                                            </g>
-
-                                            <!-- SMALL AARTI THALI RIGHT UNDER CHIN (CLOSE TO CHARACTER, SMALL RADIUS) -->
-                                            <g id="svgAartiThaliGroup" class="aarti-thali-group" onclick="performAarti()">
-                                                <!-- Outer Golden Plate Circle (r=14 Small Radius) -->
-                                                <circle cx="100" cy="114" r="14" fill="url(#thaliGoldGrad)" stroke="#FFE082" stroke-width="1.2"/>
-                                                <circle cx="100" cy="114" r="11" fill="#FFB300" stroke="#FF8F00" stroke-width="0.7"/>
-
-                                                <!-- Sweets Arranged Cleanly on Thali -->
-                                                <g class="thali-sweets">
-                                                    <text x="91" y="115" font-size="6" onclick="feedSweet('Kaju Katli')">🍬</text>
-                                                    <text x="98" y="120" font-size="6" onclick="feedSweet('Laddu')">🟡</text>
-                                                    <text x="105" y="115" font-size="6" onclick="feedSweet('Chocolate')">🍫</text>
-                                                </g>
-
-                                                <!-- Diya Base & Flickering Flame at Center Top of Thali -->
-                                                <path d="M 97 110 Q 100 113 103 110 Z" fill="#8D6E63"/>
-                                                <g class="diya-flame-group">
-                                                    <path d="M 100 109 Q 98 104 100 99 Q 102 104 100 109 Z" fill="#FF6D00"/>
-                                                    <path d="M 100 108 Q 98 105 100 101 Q 102 105 100 108 Z" fill="#FFD54F"/>
-                                                </g>
-                                            </g>
-
-                                            <!-- SVG Gradients -->
+                                        <svg viewBox="0 0 200 165" class="chibi-character-svg">
                                             <defs>
+                                                <!-- Soft Rosy Blush Gradient -->
+                                                <radialGradient id="blushGrad" cx="50%" cy="50%" r="50%">
+                                                    <stop offset="0%" stop-color="#FF4081" stop-opacity="0.75"/>
+                                                    <stop offset="100%" stop-color="#FF4081" stop-opacity="0"/>
+                                                </radialGradient>
+                                                <!-- Golden Thali Gradient -->
                                                 <radialGradient id="thaliGoldGrad" cx="50%" cy="50%" r="50%">
                                                     <stop offset="0%" stop-color="#FFE082"/>
                                                     <stop offset="70%" stop-color="#FFB300"/>
                                                     <stop offset="100%" stop-color="#FF8F00"/>
                                                 </radialGradient>
                                             </defs>
+
+                                            <!-- 1. CUTE CURLY HAIR BACK CLUSTER (SOFT ROUND PUFFS) -->
+                                            <g fill="#2A1B17">
+                                                <circle cx="58" cy="42" r="22"/>
+                                                <circle cx="78" cy="28" r="24"/>
+                                                <circle cx="100" cy="23" r="25"/>
+                                                <circle cx="122" cy="28" r="24"/>
+                                                <circle cx="142" cy="42" r="22"/>
+
+                                                <circle cx="40" cy="62" r="20"/>
+                                                <circle cx="160" cy="62" r="20"/>
+                                                <circle cx="38" cy="82" r="18"/>
+                                                <circle cx="162" cy="82" r="18"/>
+                                            </g>
+
+                                            <!-- Cute Round Ears -->
+                                            <circle cx="50" cy="76" r="10.5" fill="#FFD1A4"/>
+                                            <circle cx="50" cy="76" r="6" fill="#F8BBD0" opacity="0.6"/>
+                                            <circle cx="150" cy="76" r="10.5" fill="#FFD1A4"/>
+                                            <circle cx="150" cy="76" r="6" fill="#F8BBD0" opacity="0.6"/>
+
+                                            <!-- Soft Chubby Face Skin -->
+                                            <ellipse cx="100" cy="76" rx="44" ry="38" fill="#FFE0C2"/>
+
+                                            <!-- 2. FRONT CURLY BANGS & ACCENTS (CLEAR OPEN FOREHEAD CENTER) -->
+                                            <g fill="#3D261D">
+                                                <circle cx="58" cy="48" r="14"/>
+                                                <circle cx="72" cy="41" r="13"/>
+                                                <circle cx="142" cy="48" r="14"/>
+                                                <circle cx="128" cy="41" r="13"/>
+                                                <circle cx="100" cy="33" r="10"/>
+                                            </g>
+
+                                            <!-- Cute Festive Hair Ribbon Bow -->
+                                            <g transform="translate(100, 28)">
+                                                <path d="M -12 -3 Q 0 -10 12 -3 Q 0 4 -12 -3 Z" fill="#FF2A6D"/>
+                                                <circle cx="0" cy="-3" r="3" fill="#FFD700"/>
+                                            </g>
+
+                                            <!-- 3. ULTRA-CUTE SPARKLE ANIME EYES -->
+                                            <!-- Normal Open Eye State -->
+                                            <g id="characterEyesOpen">
+                                                <!-- Left Eye -->
+                                                <ellipse cx="80" cy="76" rx="6.5" ry="8" fill="#1A100C"/>
+                                                <circle cx="78" cy="73" r="2.8" fill="#FFFFFF"/>
+                                                <circle cx="82" cy="78" r="1.4" fill="#FFFFFF"/>
+                                                <!-- Eyelash -->
+                                                <path d="M 73 70 Q 80 66 87 71" stroke="#1A100C" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+                                                <!-- Right Eye -->
+                                                <ellipse cx="120" cy="76" rx="6.5" ry="8" fill="#1A100C"/>
+                                                <circle cx="118" cy="73" r="2.8" fill="#FFFFFF"/>
+                                                <circle cx="122" cy="78" r="1.4" fill="#FFFFFF"/>
+                                                <!-- Eyelash -->
+                                                <path d="M 113 71 Q 120 66 127 70" stroke="#1A100C" stroke-width="2" fill="none" stroke-linecap="round"/>
+                                            </g>
+
+                                            <!-- Happy Eyes Arc Toggle State -->
+                                            <g id="characterEyesHappy" class="hidden">
+                                                <path d="M 72 78 Q 80 68 88 78" stroke="#1A100C" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+                                                <path d="M 112 78 Q 120 68 128 78" stroke="#1A100C" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+                                            </g>
+
+                                            <!-- Super Chubby Rosy Blushing Cheeks -->
+                                            <circle cx="68" cy="85" r="9" fill="url(#blushGrad)"/>
+                                            <circle cx="132" cy="85" r="9" fill="url(#blushGrad)"/>
+                                            <!-- Cute Cheek Sparkle Glints -->
+                                            <text x="66" y="87" font-size="6" fill="#FFF" opacity="0.9">✨</text>
+                                            <text x="130" y="87" font-size="6" fill="#FFF" opacity="0.9">✨</text>
+
+                                            <!-- Adorable Open Mouth Smile with Tongue -->
+                                            <path d="M 93 88 Q 100 96 107 88 Q 100 102 93 88 Z" fill="#D81B60"/>
+                                            <path d="M 96 93 Q 100 91 104 93 Q 100 99 96 93 Z" fill="#FF80AB"/>
+
+                                            <!-- FOREHEAD TILAK GRAPHIC (CLEAN PURE RED ROLI DOT) -->
+                                            <g id="svgTilakGroup" class="tilak-group hidden">
+                                                <circle cx="100" cy="54" r="3.8" fill="#E53935"/>
+                                                <circle cx="98.6" cy="52.5" r="0.9" fill="#FFFDF9"/>
+                                                <circle cx="101.4" cy="53.2" r="0.9" fill="#FFFDF9"/>
+                                                <circle cx="100" cy="56.2" r="0.9" fill="#FFFDF9"/>
+                                            </g>
+
+                                            <!-- Festive Kurta Collar & Arm for Rakhi Tying -->
+                                            <g class="body-group">
+                                                <path d="M 78 112 Q 100 118 122 112 L 132 135 L 68 135 Z" fill="#E91E63"/>
+                                                <path d="M 95 112 L 105 112 L 100 128 Z" fill="#FFD54F"/>
+                                                <!-- Extended Arm & Hand -->
+                                                <path d="M 125 112 Q 146 120 156 128" stroke="#E91E63" stroke-width="16" stroke-linecap="round" fill="none"/>
+                                                <path d="M 152 126 Q 164 136 172 142" stroke="#FFD1A4" stroke-width="11" stroke-linecap="round" fill="none"/>
+                                                <circle cx="174" cy="144" r="6.8" fill="#FFD1A4"/>
+
+                                                <!-- TIED RAKHI GRAPHIC -->
+                                                <g id="svgRakhiGroup" class="rakhi-group hidden">
+                                                    <path d="M 138 120 Q 154 130 178 146" stroke="#FFD700" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+                                                    <path d="M 142 124 Q 156 133 174 144" stroke="#E53935" stroke-width="2.6" stroke-dasharray="4,2" stroke-linecap="round" fill="none"/>
+                                                    <path d="M 158 130 Q 154 140 150 146" stroke="#FFD700" stroke-width="2" fill="none"/>
+                                                    <path d="M 158 130 Q 162 140 166 147" stroke="#E53935" stroke-width="2" fill="none"/>
+                                                    <circle cx="150" cy="146" r="1.6" fill="#FFC107"/>
+                                                    <circle cx="166" cy="147" r="1.6" fill="#FFC107"/>
+                                                    <circle cx="158" cy="130" r="8.5" fill="#FFC107" stroke="#FF8F00" stroke-width="0.9"/>
+                                                    <circle cx="158" cy="130" r="5.8" fill="#D81B60"/>
+                                                    <text x="158" y="133" font-size="8" text-anchor="middle" fill="#FFF">🌸</text>
+                                                </g>
+                                            </g>
+
+                                            <!-- GOLDEN AARTI THALI (INITIAL HIDDEN, OPENS ONLY ON AARTI BUTTON TAP) -->
+                                            <g id="svgAartiThaliGroup" class="aarti-thali-group hidden" onclick="performAarti(event)">
+                                                <!-- Outer Golden Plate Circle -->
+                                                <circle cx="100" cy="134" r="18" fill="url(#thaliGoldGrad)" stroke="#FFE082" stroke-width="1.5"/>
+                                                <circle cx="100" cy="134" r="14" fill="#FFB300" stroke="#FF8F00" stroke-width="0.8"/>
+
+                                                <!-- Sweets Arranged Cleanly on Thali -->
+                                                <g class="thali-sweets">
+                                                    <text x="89" y="135" font-size="7.5" onclick="feedSweet('Kaju Katli')">🍬</text>
+                                                    <text x="98" y="142" font-size="7.5" onclick="feedSweet('Laddu')">🟡</text>
+                                                    <text x="107" y="135" font-size="7.5" onclick="feedSweet('Chocolate')">🍫</text>
+                                                </g>
+
+                                                <!-- Diya Base & Flickering Flame at Center Top of Thali -->
+                                                <path d="M 96 130 Q 100 133 104 130 Z" fill="#8D6E63"/>
+                                                <g class="diya-flame-group">
+                                                    <path d="M 100 129 Q 98 123 100 117 Q 102 123 100 129 Z" fill="#FF6D00"/>
+                                                    <path d="M 100 128 Q 98 124 100 119 Q 102 124 100 128 Z" fill="#FFD54F"/>
+                                                </g>
+                                            </g>
+
+                                            <!-- INTERACTIVE GIFT BOX GRAPHIC (PLACED FAR TO THE LEFT SIDE SO FACE IS 100% UNBLOCKED) -->
+                                            <g id="svgGiftBoxGroup" class="gift-box-group hidden" onclick="performUnboxGift(event)" style="cursor: pointer;" transform="translate(-62, 14)">
+                                                <ellipse cx="100" cy="148" rx="22" ry="7" fill="rgba(0,0,0,0.15)"/>
+                                                
+                                                <!-- Box Body -->
+                                                <rect x="80" y="122" width="40" height="26" rx="4" fill="#D81B60" stroke="#FFD700" stroke-width="1"/>
+                                                <rect x="96" y="122" width="8" height="26" fill="#FFD700"/>
+                                                <rect x="80" y="131" width="40" height="7" fill="#FFD700"/>
+
+                                                <!-- Box Lid -->
+                                                <g id="svgGiftLid" transform-origin="100px 120px" style="transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+                                                    <rect x="77" y="115" width="46" height="9" rx="3" fill="#C2185B" stroke="#FFD700" stroke-width="1"/>
+                                                    <rect x="96" y="115" width="8" height="9" fill="#FFD700"/>
+                                                    <path d="M 92 115 Q 85 106 95 110 Z" fill="#FFD700"/>
+                                                    <path d="M 108 115 Q 115 106 105 110 Z" fill="#FFD700"/>
+                                                    <circle cx="100" cy="114" r="2.5" fill="#FF6F00"/>
+                                                </g>
+
+                                                <!-- UNBOXED SURPRISE ITEM GRAPHICS (DETAILED VECTOR ART FOR EACH GIFT) -->
+                                                <g id="svgUnboxedItem" class="unboxed-item hidden">
+                                                    <!-- Glowing Pulsing Background Aura -->
+                                                    <circle cx="100" cy="96" r="24" fill="#FFF8E1" stroke="#FFD700" stroke-width="1.5" stroke-dasharray="3,2"/>
+                                                    
+                                                    <!-- 1. IPHONE GRAPHIC -->
+                                                    <g id="itemIphone" class="gift-graphic hidden">
+                                                        <rect x="89" y="74" width="22" height="42" rx="4" fill="#1F2937" stroke="#FFD700" stroke-width="1.2"/>
+                                                        <rect x="91" y="76" width="18" height="38" rx="2.5" fill="#111827"/>
+                                                        <rect x="95" y="78" width="10" height="2.5" rx="1.2" fill="#000000"/>
+                                                        <circle cx="94" cy="83" r="1.5" fill="#4B5563"/>
+                                                        <circle cx="94" cy="87.5" r="1.5" fill="#4B5563"/>
+                                                        <circle cx="98.5" cy="85" r="1.5" fill="#4B5563"/>
+                                                        <text x="100" y="104" font-size="6" font-weight="bold" fill="#FFD700" text-anchor="middle"> iPhone</text>
+                                                    </g>
+
+                                                    <!-- 2. CHOCOLATE GRAPHIC -->
+                                                    <g id="itemChoco" class="gift-graphic hidden">
+                                                        <rect x="85" y="76" width="30" height="40" rx="3" fill="#6A1B9A" stroke="#FFD700" stroke-width="1"/>
+                                                        <path d="M 85 82 Q 100 87 115 82 L 115 76 L 85 76 Z" fill="#FFD700"/>
+                                                        <rect x="89" y="86" width="22" height="22" rx="2" fill="#4A148C"/>
+                                                        <text x="100" y="100" font-size="6.5" font-weight="bold" fill="#FFD700" text-anchor="middle">SILK</text>
+                                                        <text x="100" y="112" font-size="9" text-anchor="middle">🍫</text>
+                                                    </g>
+
+                                                    <!-- 3. KAJU KATLI GRAPHIC -->
+                                                    <g id="itemKaju" class="gift-graphic hidden">
+                                                        <polygon points="100,72 116,86 100,100 84,86" fill="#E0E0E0" stroke="#FFD700" stroke-width="1.2"/>
+                                                        <polygon points="97,76 108,86 97,93 91,86" fill="#FFFFFF" opacity="0.85"/>
+                                                        <polygon points="95,100 107,110 95,120 83,110" fill="#EEEEEE" stroke="#FFC107" stroke-width="0.8"/>
+                                                        <text x="100" y="116" font-size="9" text-anchor="middle">🍬</text>
+                                                    </g>
+
+                                                    <!-- 4. SHAGUN LIFAFA GRAPHIC -->
+                                                    <g id="itemShagun" class="gift-graphic hidden">
+                                                        <rect x="83" y="76" width="34" height="40" rx="4" fill="#C2185B" stroke="#FFD700" stroke-width="1.2"/>
+                                                        <path d="M 83 76 L 100 90 L 117 76 Z" fill="#E91E63" stroke="#FFD700" stroke-width="0.8"/>
+                                                        <circle cx="100" cy="98" r="7" fill="#FFD700"/>
+                                                        <text x="100" y="101" font-size="7.5" font-weight="bold" fill="#880E4F" text-anchor="middle">₹</text>
+                                                    </g>
+
+                                                    <!-- 5. TEDDY BEAR GRAPHIC -->
+                                                    <g id="itemTeddy" class="gift-graphic hidden">
+                                                        <circle cx="87" cy="78" r="6" fill="#8D6E63"/>
+                                                        <circle cx="113" cy="78" r="6" fill="#8D6E63"/>
+                                                        <circle cx="100" cy="88" r="16" fill="#A1887F"/>
+                                                        <ellipse cx="100" cy="92" rx="6" ry="4.5" fill="#D7CCC8"/>
+                                                        <circle cx="94" cy="86" r="1.8" fill="#212121"/>
+                                                        <circle cx="106" cy="86" r="1.8" fill="#212121"/>
+                                                        <ellipse cx="100" cy="90" rx="2.5" ry="1.8" fill="#212121"/>
+                                                        <path d="M 94 104 L 106 104 L 100 100 Z" fill="#E91E63"/>
+                                                    </g>
+                                                </g>
+                                            </g>
+
                                         </svg>
                                     </div>
 
-                                    <!-- 3 INLINE RITUAL ACTION BUTTONS -->
+                                    <!-- 4 INLINE RITUAL ACTION BUTTONS WITH STEP NUMBERS (1., 2., 3., 4.) -->
                                     <div class="ritual-actions">
-                                        <button class="btn-ritual" onclick="performTilak()">
-                                            🔴 Apply Tilak
+                                        <button class="btn-ritual" onclick="performTilak(event)">
+                                            1. 🔴 Apply Tilak
                                         </button>
-                                        <button class="btn-ritual primary" onclick="performTieRakhi()">
-                                            🌸 Tie Rakhi!
+                                        <button class="btn-ritual" onclick="performTieRakhi(event)">
+                                            2. 🌸 Tie Rakhi!
                                         </button>
-                                        <button class="btn-ritual" onclick="performAarti()">
-                                            🪔 Perform Aarti!
+                                        <button class="btn-ritual" onclick="performAarti(event)">
+                                            3. 🪔 Perform Aarti!
+                                        </button>
+                                        <button class="btn-ritual" onclick="performUnboxGift(event)">
+                                            4. 🎁 Unbox Gift
                                         </button>
                                     </div>
                                 </div>
@@ -414,55 +514,6 @@
                                     </div>
                                     <button class="btn-ritual primary" onclick="showerLoveFlowers()">
                                         🌸 Shower Flowers & Love!
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- TAB 2: UNBOX GIFT -->
-                        <div id="giftTab" class="tab-content">
-                            <div class="ritual-card text-center">
-                                <h4>Your Special Surprise Gift! 🎁</h4>
-                                <p class="tab-desc">Tap gift box to unbox surprise!</p>
-                                
-                                <div class="gift-box-interactive" id="giftBoxElement" onclick="unboxVirtualGift()">
-                                    <div class="gift-box-lid" id="giftLid">🎁</div>
-                                    <div class="gift-box-body">✨ Tap to Open ✨</div>
-                                </div>
-
-                                <div id="unboxedGiftResult" class="gift-result-card hidden">
-                                    <div id="unboxedGiftEmoji" class="gift-big-emoji">🍬</div>
-                                    <h4 id="unboxedGiftTitle">Kaju Katli Box!</h4>
-                                    <p id="unboxedGiftDesc">"Sweet treats for Raksha Bandhan!"</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- TAB 3: SIBLING CERTIFICATE -->
-                        <div id="certificateTab" class="tab-content">
-                            <div class="ritual-card">
-                                <div class="certificate-box">
-                                    <div class="cert-border">
-                                        <div class="cert-header">🏆 OFFICIAL CERTIFICATE 🏆</div>
-                                        <div class="cert-title">Best Sibling Award</div>
-                                        <div class="cert-body">
-                                            Awarded to: <h3 id="certRecipientName" class="cert-name">Chhotu</h3>
-                                            for being the sweetest sibling in the universe!
-                                        </div>
-                                        <div class="cert-signatures">
-                                            <div class="sig-col">
-                                                <div class="sig-line" id="certSenderSig">Your Loving Sister</div>
-                                                <div class="sig-label">Presented By</div>
-                                            </div>
-                                            <div class="sig-col">
-                                                <div class="sig-seal">🌸 RAKHI 2026 🌸</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center margin-top-1">
-                                    <button class="btn-ritual" onclick="triggerConfettiBurst()">
-                                        🎉 Blast Confetti!
                                     </button>
                                 </div>
                             </div>

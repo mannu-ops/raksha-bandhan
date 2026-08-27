@@ -705,7 +705,7 @@ body {
     100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* SLOW, GENTLE FIXED-POSITION ROTATION FOR SMALL AARTI THALI UNDER CHIN */
+/* GENTLE, CUTE SMALL-RANGE AARTI WAVING MOTION RIGHT UNDER CHIN */
 .aarti-thali-group {
     cursor: pointer;
     transform-origin: 100px 114px;
@@ -718,15 +718,24 @@ body {
 }
 
 .aarti-thali-group.waving-aarti {
-    animation: slowAartiRotate 3.5s linear infinite;
+    animation: cuteSmallAartiWave 2.2s ease-in-out infinite;
 }
 
-@keyframes slowAartiRotate {
+@keyframes cuteSmallAartiWave {
     0% {
-        transform: rotate(0deg);
+        transform: translate(0px, 0px) rotate(0deg);
+    }
+    25% {
+        transform: translate(-3px, -2px) rotate(-6deg);
+    }
+    50% {
+        transform: translate(0px, -4px) rotate(0deg);
+    }
+    75% {
+        transform: translate(3px, -2px) rotate(6deg);
     }
     100% {
-        transform: rotate(360deg);
+        transform: translate(0px, 0px) rotate(0deg);
     }
 }
 
